@@ -44,11 +44,3 @@ setMethod("%*%", c(x = "matrix", y = "differential"),
       y
     })
 
-# transposition
-setMethod("t", c(x = "differential"), 
-   function(x) {
-     x@d <- lapply(x@d, \(d) t(d))
-     x
-   })
-
-
