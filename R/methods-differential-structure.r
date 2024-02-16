@@ -82,6 +82,12 @@ setMethod("[", c(x = "differential", i = "index", j = "missing", drop = "ANY"),
       x
     })
 
+setMethod("[", c(x = "differential", i = "missing", j = "missing", drop = "ANY"), 
+    function(x, i, j, ..., drop) { 
+      x@d <- lapply(x@d, \(z) z[,,...,drop = drop])
+      x
+    })
+
 
 # ------------------- replace methods ---------------------- 
 setMethod("[<-", c(x = "differential", i = "index", j = "index", value = "differential"),
@@ -113,4 +119,10 @@ setMethod("[<-", c(x = "differential", i = "index", j = "missing", value = "diff
       x
     })
 
+setMethod("[<-", c(x = "differential", i = "missing", j = "missing", value = "differential"), 
+    function(x, i, j, ..., value) { 
+      check.names(x, value)
+      x@d <- mapply( \(x,v) { x[,,...] <- v; x }, x@d, value@d, SIMPLIFY = FALSE)
+      x
+    })
 

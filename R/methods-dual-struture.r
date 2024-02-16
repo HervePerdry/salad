@@ -84,35 +84,3 @@ setMethod("cbind2", c(x = "dual", y = "dual"),
       x
     })
 
-# ------------------- subset methods ---------------------- 
-setMethod("[", c(x = "dual", i = "index", j = "index", drop = "ANY"),
-    function(x, i, j, ..., drop) {
-      x@x <- x@x[i, j, ..., drop = drop]
-      x@d <- x@d[i, j, ..., drop = drop]
-      x
-    })
-
-setMethod("[", c(x = "dual", i = "missing", j = "index", drop = "ANY"),
-    function(x, i, j, ..., drop) {
-      x@x <- x@x[, j, ..., drop = drop]
-      x@d <- x@d[, j, ..., drop = drop]
-      x
-    })
-
-setMethod("[", c(x = "dual", i = "index", j = "missing", drop = "ANY"),
-    function(x, i, j, ..., drop) {
-      if(is.null(dim(x))) { # vecteur
-        x@x <- x@x[i]
-        x@d <- x@d[i]
-      } else { # matrice
-        if(nargs() == 2L) {  # appel x[i]
-          x@x <- x@x[i, ..., drop = drop]
-          x@d <- x@d[i, ..., drop = drop]
-        } else { # appel x[i,]
-          x@x <- x@x[i,, ..., drop = drop]
-          x@d <- x@d[i,, ..., drop = drop]
-        }
-      }
-      x
-    })
-
