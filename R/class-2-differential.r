@@ -20,15 +20,14 @@ setMethod("initialize", "differential",
     })
 
 
-setGeneric("varnames", function(x) NULL)
-#' @export
-setMethod("varnames", c(x = "differential"), function(x) names(x@d) )
+setGeneric("check.names", function(x, y) standardGeneric("check.names"))
+setMethod("check.names", c(x = "differential", y = "differential"), 
+    function(x,y) {
+      if(!salad('check.names')) return;
+      nx <- varnames(x)
+      ny <- varnames(y)
+      if(length(nx) != length(ny)) stop("Different set of derivatives", .Call = FALSE)
+      if(any(nx != ny)) stop("Different set of derivatives", .Call = FALSE)
+    })
 
-check.names <- function(x,y) {
-  if(!salad('check.names')) return;
-  nx <- varnames(x)
-  ny <- varnames(y)
-  if(length(nx) != length(ny)) stop("Different set of derivatives", .Call = FALSE)
-  if(any(nx != ny)) stop("Different set of derivatives", .Call = FALSE)
-}
 

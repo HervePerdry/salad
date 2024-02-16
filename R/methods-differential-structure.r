@@ -74,7 +74,7 @@ setMethod("[", c(x = "differential", i = "index", j = "missing", drop = "ANY"),
         x@d <- lapply(x@d, \(z) z[i])
       } else { # matrice
         if(nargs() == 2L) {  # appel D[i]
-          x@d <- lapply(x@d, \(z) z[i,...,drop = drop])
+          x@d <- lapply(x@d, \(z) z[i,drop = drop])
         } else { # appel D[i,]
           x@d <- lapply(x@d, \(z) z[i,,...,drop = drop])
         }
@@ -110,8 +110,8 @@ setMethod("[<-", c(x = "differential", i = "index", j = "missing", value = "diff
       if(is.null(dim(x))) { # vecteur
         x@d <- mapply( \(x,v) { x[i] <- v; x }, x@d, value@d, SIMPLIFY = FALSE)
       } else { # matrice
-        if(nargs() == 2L) {  # appel D[i]<-
-          x@d <- mapply( \(x,v) { x[i,...] <- v; x }, x@d, value@d, SIMPLIFY = FALSE)
+        if(nargs() == 3L) {  # appel D[i]<-
+          x@d <- mapply( \(x,v) { x[i] <- v; x }, x@d, value@d, SIMPLIFY = FALSE)
         } else { # appel D[i,]<-
           x@d <- mapply( \(x,v) { x[i,,...] <- v; x }, x@d, value@d, SIMPLIFY = FALSE)
         }

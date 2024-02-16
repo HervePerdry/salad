@@ -28,8 +28,6 @@ setMethod("names<-", c(x = "dual"),
       x
     })
 
-#' @export
-setMethod("varnames", c(x = "dual"), function(x) varnames(x@d))
 
 # ------------------- concatenation and binding methods 
 # beware the concatenation with constants !
