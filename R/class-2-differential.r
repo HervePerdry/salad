@@ -1,7 +1,6 @@
 #' @title Differential class
 #'
 #' @exportClass differential
-#' @export
 setClass("differential", slots = c(d = "list"))
 
 setMethod("initialize", "differential", 
@@ -20,9 +19,10 @@ setMethod("initialize", "differential",
     })
 
 
+#' @export 
 setGeneric("check.names", function(x, y) standardGeneric("check.names"))
 setMethod("check.names", c(x = "differential", y = "differential"), 
-    function(x,y) {
+    function(x,y) { 
       if(!salad('check.names')) return;
       nx <- varnames(x)
       ny <- varnames(y)

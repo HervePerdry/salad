@@ -1,7 +1,6 @@
 #' @title dual class
 #'
 #' @exportClass dual
-#' @export
 setClass("dual", slots = c(x = "numericOrArray", d = "differential"))
 
 setMethod("initialize", "dual",

@@ -78,21 +78,21 @@ setMethod("[<-", c(x = "dual", i = "missing", j = "missing", value = "dual"),
     })
 
 ####### dual / numeric
-setMethod("[<-", c(x = "dual", i = "index", j = "index", value = "numericOrArray"), 
+setMethod("[<-", c(x = "dual", i = "index", j = "index", value = "logicalOrNumericOrArray"), 
     function(x, i, j, ..., value) {
       value <- dual(value, varnames = varnames(x), constant = TRUE)
       x[i,j,...] <- value
       x
     })
 
-setMethod("[<-", c(x = "dual", i = "missing", j = "index", value = "numericOrArray"),
+setMethod("[<-", c(x = "dual", i = "missing", j = "index", value = "logicalOrNumericOrArray"),
     function(x, i, j, ..., value) {
       value <- dual(value, varnames = varnames(x), constant = TRUE)
       x[,j,...] <- value
       x
     })
 
-setMethod("[<-", c(x = "dual", i = "index", j = "missing", value = "numericOrArray"),
+setMethod("[<-", c(x = "dual", i = "index", j = "missing", value = "logicalOrNumericOrArray"),
     function(x, i, j, ..., value) {
       value <- dual(value, varnames = varnames(x), constant = TRUE)
       if(is.null(dim(x))) { # vecteur
@@ -107,7 +107,7 @@ setMethod("[<-", c(x = "dual", i = "index", j = "missing", value = "numericOrArr
       x
     })
 
-setMethod("[<-", c(x = "dual", i = "missing", j = "missing", value = "numericOrArray"),
+setMethod("[<-", c(x = "dual", i = "missing", j = "missing", value = "logicalOrNumericOrArray"),
     function(x, i, j, ..., value) {
       value <- dual(value, varnames = varnames(x), constant = TRUE)
       x[,,...] <- value
@@ -117,7 +117,6 @@ setMethod("[<-", c(x = "dual", i = "missing", j = "missing", value = "numericOrA
 
 #########  numeric / dual 
 # ceci ne fonctionne pas car les methodes sont "Sealed"
-# voir un workaround dans /inst/scripts/subassignment.r ??
 
 # setMethod("[<-", c(x = "numericOrArray", i = "index", j = "index", value = "dual"), 
 #     function(x, i, j, ..., value) { browser()

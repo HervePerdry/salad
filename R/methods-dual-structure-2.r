@@ -1,3 +1,4 @@
+# rep
 setMethod("rep", signature(x = "dual"),
     function(x, ...) {
       x@x <- rep(x@x, ...)
@@ -6,17 +7,39 @@ setMethod("rep", signature(x = "dual"),
     })
 
 # transposition
-setMethod("t", c(x = "dual"),
-   function(x) {
-     x@x <- t(x@x)
-     x@d <- t(x@d)
-     x
-   })
+#' @exportS3Method t differential
+t.dual <- function(x) {
+  x@x <- t(x@x)
+  x@d <- t(x@d)
+  x
+}
+setMethod("t", c(x = "dual"), t.dual)
+
+# aperm
+#' @exportS3Method aperm dual
+aperm.dual <- function(a, perm = NULL, resize = TRUE, ...) {
+  a@x <- aperm(a@x, perm, resize, ...)
+  a@d <- aperm(a@d, perm, resize, ...)
+  a
+}
+#' @export
+setMethod("aperm", c(a = "dual"), aperm.dual)
 
 #' @export
 setMethod("matrix", c(data = "dual"),
     function(data, nrow = 1, ncol = 1, byrow = FALSE, dimnames = NULL) {
-      data <- rep(data, length.out = nrow * ncol)
+      if(missing(nrow) & missing(ncol)) {
+        ncol <- 1
+        nrow <- length(data)
+      } else if(missing(nrow) & !missing(ncol)) {
+        nrow <- length(data) %/% ncol
+      } else if(!missing(nrow) & missing(ncol)) {
+        ncol <- length(data) %/% nrow
+      }
+      if( ((nrow*ncol) %% length(data)) != 0 ) 
+        warning("data length doesn't fit well with matrix dimensions")
+      if(nrow*ncol != length(data))
+        data <- rep(data, length.out = nrow * ncol)
       if(byrow) {
         dim(data) <- c(ncol, nrow)
         data <- t(data)
@@ -27,48 +50,42 @@ setMethod("matrix", c(data = "dual"),
       data
     })
 
-# ---- ifelse : deux parfums ...
-# la promotion en classe "dual" ne sera faite que si nécessaire (selon les valeurs de test)
-# utiliser la classe numericOrArrayOrDual permet d'éviter d'avoir deux fois la même fonction 
-# ou bien d'avoir des ambiguités de signature
 #' @export
-setMethod("ifelse", signature(test = "ANY", yes = "dual", no = "numericOrArrayOrDual"),
-    function(test, yes, no) { 
-      test <- test2logical(test)
-      len <- length(test)
-      ypos <- which(test)
-      npos <- which(!test)
-      if(length(ypos) == 0L) {
-        return(rep(no, length.out = len))
-      }
-      ans <- rep(yes, length.out = len)
-      ans[npos] <- rep(no, length.out = len)[npos]
-      ans
+setMethod("array", c(data = "dual"),
+    function(data, dim = length(data), dimnames = NULL) {
+      dim(data) <- dim
+      dimnames(data) <- dimnames
+      data
     })
 
-#' @export
-setMethod("ifelse", signature(test = "ANY", yes = "numericOrArray", no = "dual"),
-    function(test, yes, no) {
-      test <- test2logical(test)
-      len <- length(test)
-      ypos <- which(test)
-      npos <- which(!test)
-      if(length(npos) == 0L) {
-        return(rep(yes, length.out = len))
-      }
-      ans <- rep(no, length.out = len)
-      ans[ypos] <- rep(yes, length.out = len)[npos]
-      ans
-    })
+### --------- as.matrix
 
-test2logical <- function(test) { # piece of code from base::ifelse
-  if(is.atomic(test)) {
-    if(typeof(test) != "logical") storage.mode(test) <- "logical"
-  } else {
-    test <- if (isS4(test)) methods::as(test, "logical") else as.logical(test)
+#' @exportS3Method as.matrix dual
+as.matrix.dual <- function(x, ...) {
+  if(salad("drop.derivatives")) {
+    warning("Droping derivatives in as.matrix. See ?salad to change this behaviour")
+    return(as.matrix(x@x))
   }
-  test
+  if(is.null(dim(x))) dim(x) <- c(length(x), 1)
+  x
 }
+setAs("dual", "matrix", function(from) as.matrix.dual(from))
 
+#' @export
+setMethod("as.matrix", "dual", as.matrix.dual)
 
+### --------- as.vector
 
+#' @exportS3Method as.vector dual
+as.vector.dual <- function(x) {
+  if(salad("drop.derivatives")) {
+    warning("Droping derivatives in as.vector. See ?salad to change this behaviour")
+    return(as.vector(x@x))
+  }
+  dim(x) <- NULL
+  x
+}
+setAs("dual", "vector", function(from) as.vector.dual(from))
+
+#' @export
+setMethod("as.vector", "dual", as.vector.dual)

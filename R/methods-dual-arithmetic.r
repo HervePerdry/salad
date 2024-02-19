@@ -82,4 +82,13 @@ setMethod("/", c(e1 = "numeric", e2 = "dual"),
 
 setMethod("/", c(e1 = "dual", e2 = "dual"), function(e1, e2) e1 * (1/e2) )
 
+# exponentiation
+setMethod("^", c(e1 = "dual", e2 = "numeric"), 
+    function(e1, e2) {
+      e1@d <- (e2*e1@x^(e2-1)) * e1@d
+      e1@x <- e1@x^e2
+      e1
+    })
+setMethod("^", c(e1 = "numeric", e2 = "dual"), function(e1, e2) exp(e2*log(e1)))
+setMethod("^", c(e1 = "dual", e2 = "dual"), function(e1, e2) exp(e2*log(e1)))
 
