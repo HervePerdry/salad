@@ -46,6 +46,11 @@ setMethod("rbind2", c(x = "differential", y = "differential"),
       x
     })
 
+setMethod("rbind2", c(x = "differential", y = "missing"), 
+    function(x, ...) {
+      if(is.null(dim(x))) dim(x) <- c(1, length(x))
+      x
+    })
 
 setMethod("cbind2", c(x = "differential", y = "differential"),
     function(x, y, ...) { 
@@ -54,8 +59,13 @@ setMethod("cbind2", c(x = "differential", y = "differential"),
       x
     })
 
+setMethod("cbind2", c(x = "differential", y = "missing"), 
+    function(x, ...) {
+      if(is.null(dim(x))) dim(x) <- c(length(x), 1)
+      x
+    })
 
-# ------------------- subset methods ---------------------- 
+## ------------------- subset methods ---------------------- 
 setMethod("[", c(x = "differential", i = "index", j = "index", drop = "ANY"), 
     function(x, i, j, ..., drop) { 
       x@d <- lapply(x@d, \(z) z[i, j, ..., drop = drop])

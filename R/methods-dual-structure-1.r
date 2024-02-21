@@ -31,8 +31,7 @@ setMethod("names<-", c(x = "dual"),
 
 # ------------------- concatenation and binding methods 
 # beware the concatenation with constants !
-setMethod("c", c(x = "dual"),
-    function(x, ...) {
+concat_dual <- function(x, ...) {
       if(nargs() == 1L) return(x)
       y <- c(...)
       if(is(y, "numeric")) 
@@ -40,7 +39,9 @@ setMethod("c", c(x = "dual"),
       x@x <- c(x@x, y@x)
       x@d <- c(x@d, y@d)
       x
-    })
+    }
+
+setMethod("c", c(x = "dual"), concat_dual)
 
 setMethod("c", c(x = "numericOrArray"),
     function(x, ...) {
@@ -53,7 +54,7 @@ setMethod("c", c(x = "numericOrArray"),
       }
     })
 
-# rbind, 3 versions...
+# rbind, 4 versions...
 setMethod("rbind2", c(x = "dual", y = "dual"),
     function(x, y, ...) { 
       x@x <- rbind2(x@x, y@x)
@@ -73,12 +74,23 @@ setMethod("rbind2", c(x = "dual", y = "numericOrArray"),
       rbind2(x, y)
     })
 
+setMethod("rbind2", c(x = "dual", y = "missing"), 
+    function(x, ...) {
+      if(is.null(dim(x))) dim(x) <- c(1, length(x))
+      x
+    })
 
 # cbind, idem
 setMethod("cbind2", c(x = "dual", y = "dual"),
     function(x, y, ...) {
       x@x <- cbind(x@x, y@x)
       x@d <- cbind(x@d, y@d)
+      x
+    })
+
+setMethod("cbind2", c(x = "dual", y = "missing"), 
+    function(x, ...) {
+      if(is.null(dim(x))) dim(x) <- c(length(x), 1)
       x
     })
 
