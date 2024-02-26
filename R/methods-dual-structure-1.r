@@ -60,7 +60,7 @@ concat0 <- function(L) {
 c.dual <- function(x, ...) {
   # build the list of arguments in the order they were given...
   L <- as.list(sys.call())[-1];
-  L <- lapply(L, eval)
+  L <- lapply(L, eval, parent.frame(1))
   # ^ don't do a loop here! lapply works better because calls are evaluated after! 
   # with a loop, a call 'c(x[1], x[2])' would have x modified in the current frame...
   # now go for it
@@ -101,7 +101,7 @@ f <- function(x, ...) {
 
 g <- function(x, ...) { 
   L <- as.list(sys.call())[-1]; 
-  lapply(L, eval)
+  lapply(L, eval, parent.frame(1))
 }
 } # ----------- end comment --------------------
 
