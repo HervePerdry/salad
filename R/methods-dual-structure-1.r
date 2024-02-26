@@ -32,11 +32,13 @@ setMethod("names<-", c(x = "dual"),
 # ------------------- concatenation and binding methods 
 # beware the concatenation with constants !
 # it is not so easy to allow calls like c(a = dual(1), b = 2) or worse c(a = 1, dual(1)) ...
-
-concat_dual0 <- function(L) {
-  x <- eval(L[[1]])
-  if(length(L) == 1) return(x)
-  y <- concat_dual0(L[-1])
+# a call like c(a = 1, b = dual(2)) still doesn't work well (first element isn't dual ; no element named x)
+# this is recursive and not very efficient 
+# -- it would probably be better to build lists of @x and @d, and end with do.call
+concat0 <- function(L) { 
+  x <- L[[1]]
+  if(length(L) == 1) return(x) 
+  y <- concat0(L[-1])   # to do test if any dual ... do.call c or do concat0 ? or add argument "which dual"
   ixd <- is(x, "dual")
   iyd <- is(y, "dual")
   if(!ixd & !iyd) {
@@ -47,34 +49,62 @@ concat_dual0 <- function(L) {
   } 
   if(!ixd) {
     x <- dual(x, varnames = varnames(y), constant = TRUE)
-  } 
+  }
   x@x <- c(x@x, y@x)
   x@d <- c(x@d, y@d)
   x
 }
 
-concat_dual <- function(x, ...) { cat("concat_dual\n")
-  L <- as.list(sys.call())[-1]
-  x <- concat_dual0(L)
+# is this export useful?
+#' @exportS3Method c dual
+c.dual <- function(x, ...) {
+  # build the list of arguments in the order they were given...
+  L <- as.list(sys.call())[-1];
+  L <- lapply(L, eval, parent.frame(1))
+  # ^ don't do a loop here! lapply works better because calls are evaluated after! 
+  # with a loop, a call 'c(x[1], x[2])' would have x modified in the current frame...
+  # now go for it
+  x <- concat0(L) 
   names(x) <- names(L)
   x
 }
+#' @export
+setMethod("c", c(x = "dual"), c.dual)
+#' @export
+setMethod("c", c(x = "numericOrArray"), c.dual)  # in reality this won't be called unless ... .Primitive("c") fails ?
 
-concat_num <- function(x, ...) { cat("concat_num\n")
-  L <- as.list(sys.call())[-1]
-  print(L)
-  if( any(sapply(list(...), \(z) is(z, "dual"))) ) {
-    y <- c(...)
-    x <- dual(x, varnames = varnames(y), constant = TRUE)
-    c(x, y)
-  } else {
-    c(...)
-  }
+if(FALSE) { # ------ comment -----------------------
+# for the record
+# two different solutions
+# to build list of arguments in the right order...
+f <- function(x, ...) {
+  nn <- names( as.list(sys.call())[-1] )
+  if(is.null(nn)) { # no names, 1st arg is x...
+    L <- list(x, ...) 
+  } else if(missing(x)) { # all args have name, none is x
+    L <- list(...)
+  } else { # one of the arguments is x
+    ix <- which(nn == "x")
+    if(length(ix) == 0) { # no argument has been given name x, so x is the first unnamed argument
+      ix <- which(nn == "")[1]
+    }
+    if(ix != 1) { # x is not the first argument : reorder arguments
+      L <- list(...)
+      L <- c(L[ 1:(ix-1) ], list(x), L[ -(1:(ix-1)) ])
+    } else {      # x is the first argument, easy case...
+      L <- list(x, ...)
+    }
+  } 
+  names(L) <- nn
+  L
 }
 
-setMethod("c", c(x = "dual"), concat_dual)
+g <- function(x, ...) { 
+  L <- as.list(sys.call())[-1]; 
+  lapply(L, eval, parent.frame(1))
+}
+} # ----------- end comment --------------------
 
-setMethod("c", c(x = "numericOrArray"), concat_num)
 
 # rbind, 4 versions...
 rbind2_dd <- function(x, y, ...) {
