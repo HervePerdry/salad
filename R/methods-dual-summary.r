@@ -1,18 +1,15 @@
 
 # --- somme ---
-setGeneric("sum1", function(x, na.rm) standardGeneric("sum1"))
-setMethod("sum1", c(x = "dual"), 
-    function(x, na.rm = FALSE) {
-      if(na.rm) {
-        i <- which(!is.na(x@x))
-        x <- x[i]
-      }
-      x@x <- sum(x@x)
-      x@d <- sum(x@d)
-      x
-    })
-setMethod("sum1", c(x = "numericOrArray"), function(x, na.rm = FALSE) .Primitive("sum")(x, na.rm = na.rm))
-setMethod("sum", c(x = "numericOrArrayOrDual"), function(x, ..., na.rm = TRUE) sum1(c(x, ...), na.rm = na.rm))
+#' @exportS3Method sum dual
+sum.dual <- function(x, na.rm = FALSE) {
+  if(na.rm) {
+    i <- which(!is.na(x@x))
+    x <- x[i]
+  }
+  x@x <- sum(x@x)
+  x@d <- sum(x@d)
+  x
+}
 
 # --- produit ---
 setGeneric("prod1", function(x, na.rm) standardGeneric("prod1"))
