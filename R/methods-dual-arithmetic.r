@@ -62,7 +62,7 @@ setMethod("*", c(e1 = "dual", e2 = "numeric"),
 
 setMethod("*", c(e1 = "numeric", e2 = "dual"), 
     function(e1, e2) {
-      e2@x <- e1 * e1@x 
+      e2@x <- e1 * e2@x 
       e2@d <- e1 * e2@d
       e2
     })

@@ -7,6 +7,7 @@ c.differential <- function(x, ...) {
   y <- unclass(y)
   L <- vector("list", length(x))
   for(i in seq_along(x)) L[[i]] <- c(x[[i]], y[[i]])
+  names(L) <- names(x)
   class(L) <- "differential"
   L
 }
@@ -24,6 +25,7 @@ rbind.differential <- function(x, ...) {
   y <- unclass(y)
   L <- vector("list", length(x))
   for(i in seq_along(x)) L[[i]] <- rbind(x[[i]], y[[i]])
+  names(L) <- names(x)
   class(L) <- "differential"
   L
 }
@@ -40,6 +42,7 @@ cbind.differential <- function(x, ...) {
   y <- unclass(y)
   L <- vector("list", length(x))
   for(i in seq_along(x)) L[[i]] <- cbind(x[[i]], y[[i]])
+  names(L) <- names(x)
   class(L) <- "differential"
   L
 }

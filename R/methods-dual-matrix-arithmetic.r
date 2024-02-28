@@ -1,16 +1,16 @@
-setMethod("%*%", c(x = "dual", y = "numericOrArray"),
-    function(x, y) {
-      x@x <- x@x %*% y
-      x@d <- matrixProdDiNu(x@d, y)
-      x
-    })
+#' @export
+matrixprod_dn <- function(x, y) {
+  V <- x@x %*% y
+  D <- matrixProdDiNu(x@d, y)
+  fastNewDual(V, D)
+}
 
-setMethod("%*%", c(x = "numericOrArray", y  = "dual"),
-    function(x, y) {
-      y@x <- x %*% y@x
-      y@d <- matrixProdNuDi(x, y@d)
-      x
-    })
+#' @export
+matrixprod_nd <- function(x, y) {
+  V <- x %*% y@x
+  D <- matrixProdNuDi(x, y@d)
+  fastNewDual(V, D)
+}
 
 #' @export
 matrixprod_dd <- function(x, y) {
@@ -26,6 +26,9 @@ matrixprod_dd <- function(x, y) {
   class(L) <- "differential"
   fastNewDual(X %*% Y, L)
 }
+
+setMethod("%*%", c(x = "dual", y = "numericOrArray"), matrixprod_dn)
+setMethod("%*%", c(x = "numericOrArray", y  = "dual"), matrixprod_nd)
 setMethod("%*%", c(x = "dual", y = "dual"), matrixprod_dd)
 
 
