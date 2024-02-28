@@ -26,4 +26,4 @@ salad <- function(...) {
   R
 }
 
-salad.opts <- list2env( list(check.names = TRUE, drop.derivatives = TRUE) )
+salad.opts <- list2env( list(drop.derivatives = TRUE) )
