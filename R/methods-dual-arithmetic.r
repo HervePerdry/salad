@@ -48,7 +48,7 @@ setMethod("-", c(e1 = "numericOrArray", e2 = "dual"),
 # multiplications
 setMethod("*", c(e1 = "dual", e2 = "dual"),
     function(e1, e2) { 
-      e1@d <- e1@x * e2@d + e1@d * e2@x
+      e1@d <- e1@x * e2@d + e2@x * e1@d
       e1@x <- e1@x * e2@x
       e1
     })
@@ -56,11 +56,17 @@ setMethod("*", c(e1 = "dual", e2 = "dual"),
 setMethod("*", c(e1 = "dual", e2 = "numeric"),
     function(e1, e2) {
       e1@x <- e1@x * e2
-      e1@d <- e1@d * e2
+      e1@d <- e2 * e1@d
       e1
     })
 
-setMethod("*", c(e1 = "numeric", e2 = "dual"), function(e1, e2) e2*e1 )
+setMethod("*", c(e1 = "numeric", e2 = "dual"), 
+    function(e1, e2) {
+      e2@x <- e1 * e1@x 
+      e2@d <- e1 * e2@d
+      e2
+    })
+
 
 
 # divisions

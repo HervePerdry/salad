@@ -4,7 +4,7 @@ setMethod("dim", c(x = "dual"), function(x) dim(x@x))
 setMethod("dim<-", c(x = "dual"),
     function(x, value) {
       dim(x@x) <- value
-      dim(x@d) <- value
+      dim.differential(x@d) <- value
       x
     })
 
@@ -13,7 +13,7 @@ setMethod("dimnames<-", c(x = "dual"),
     function(x, value) {
       if(!is.null(dim(x))) { # matrice
         dimnames(x@x) <- value
-        dimnames(x@d) <- value
+        dimnames.differential(x@d) <- value
       }
       x
     })
@@ -23,7 +23,7 @@ setMethod("names<-", c(x = "dual"),
     function(x, value) {
       if(is.null(dim(x))) { # vecteur
         names(x@x) <- value
-        names(x@d) <- value
+        names.differential(x@d) <- value
       }
       x
     })
@@ -51,7 +51,7 @@ concat0 <- function(L) {
     x <- dual(x, varnames = varnames(y), constant = TRUE)
   }
   x@x <- c(x@x, y@x)
-  x@d <- c(x@d, y@d)
+  x@d <- c.differential(x@d, y@d)
   x
 }
 
@@ -123,7 +123,7 @@ g <- function(x, ...) {
 # rbind, 4 versions...
 rbind2_dd <- function(x, y, ...) {
   x@x <- rbind2(x@x, y@x)
-  x@d <- rbind2(x@d, y@d)
+  x@d <- rbind.differential(x@d, y@d)
   x
 }
 setMethod("rbind2", c(x = "dual", y = "dual"), rbind2_dd)
@@ -149,7 +149,7 @@ setMethod("rbind2", c(x = "dual", y = "missing"),
 # cbind, idem
 cbind2_dd <- function(x, y, ...) {
   x@x <- cbind(x@x, y@x)
-  x@d <- cbind(x@d, y@d)
+  x@d <- cbind.differential(x@d, y@d)
   x
 }
 

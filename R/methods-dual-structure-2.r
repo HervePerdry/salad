@@ -7,7 +7,7 @@ setMethod("rep", signature(x = "dual"),
     })
 
 # transposition
-#' @exportS3Method t differential
+#' @exportS3Method t dual
 t.dual <- function(x) {
   x@x <- t(x@x)
   x@d <- t(x@d)
@@ -27,7 +27,7 @@ setMethod("aperm", c(a = "dual"), aperm.dual)
 
 #' @export
 setMethod("matrix", c(data = "dual"),
-    function(data, nrow = 1, ncol = 1, byrow = FALSE, dimnames = NULL) {
+    function(data, nrow = 1, ncol = 1, byrow = FALSE, dimnames = NULL) { 
       if(missing(nrow) & missing(ncol)) {
         ncol <- 1
         nrow <- length(data)
