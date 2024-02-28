@@ -7,10 +7,10 @@ setMethod("value", "numericOrArray", function(x) x)
 #' @export
 setGeneric("d", function(x, varnames) standardGeneric("d"))
 d1 <- function(x, varnames) {
-  if(missing(varnames)) return(x@d@d)
+  if(missing(varnames)) return(unclass(x@d))
   L <- list()
   for(nn in varnames) {
-    L[[nn]] <- comp(x@d, nn)
+    L[[nn]] <- component(x@d, nn)
   }
   L
 }

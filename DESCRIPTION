@@ -12,4 +12,6 @@ Description: This package defines a flexible S4 class for automatic differenciat
 License: MIT
 Encoding: UTF-8
 Depends: methods
+LinkingTo: Rcpp
+NeedsCompilation: yes
 RoxygenNote: 7.2.3

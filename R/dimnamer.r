@@ -1,3 +1,4 @@
+# fonction pour produire les noms des variables dans dual()
 dimnamer <- function(dims) {
   if(length(dims) == 1) 
     as.character(seq_len(dims[1]))
