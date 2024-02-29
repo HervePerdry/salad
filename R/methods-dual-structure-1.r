@@ -82,8 +82,8 @@ c.dual <- function(x, ...) {
   x
 }
 
-#' @export
-setMethod("c", c(x = "dual"), c.dual)
+# Note : this method is needed for situations like c(0, dual(1))
+# for c(dual(1), ...) the S3 method is sufficient
 #' @export
 setMethod("c", c(x = "numericOrArray"), c.dual)  # in reality this won't be called unless ... .Primitive("c") fails ?
 
