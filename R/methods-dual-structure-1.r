@@ -59,10 +59,23 @@ concat0 <- function(L) {
 #' @exportS3Method c dual
 c.dual <- function(x, ...) {
   # build the list of arguments in the order they were given...
-  L <- as.list(sys.call())[-1];
-  L <- lapply(L, eval, parent.frame(1))
-  # ^ don't do a loop here! lapply works better because calls are evaluated after! 
-  # with a loop, a call 'c(x[1], x[2])' would have x modified in the current frame...
+  nn <- names( as.list(sys.call())[-1] )
+  if(is.null(nn)) { # no names, 1st arg is x...
+    L <- list(x, ...) 
+  } else if(missing(x)) { # all args have name, none is x
+    L <- list(...)
+  } else { # one of the arguments is x
+    ix <- which(nn == "x")
+    if(length(ix) == 0) { # no argument has been given name x, so x is the first unnamed argument
+      ix <- which(nn == "")[1]
+    }
+    if(ix != 1) { # x is not the first argument : reorder arguments
+      L <- list(...)
+      L <- c(L[ 1:(ix-1) ], list(x), L[ -(1:(ix-1)) ])
+    } else {      # x is the first argument, easy case...
+      L <- list(x, ...)
+    }
+  } 
   # now go for it
   x <- concat0(L) 
   names(x) <- names(L)
@@ -76,12 +89,12 @@ setMethod("c", c(x = "numericOrArray"), c.dual)  # in reality this won't be call
 if(FALSE) { # ------ comment -----------------------
 # for the record
 # two different solutions
-# build list of arguments in the right order...
+# to build list of arguments in the right order...
 f <- function(x, ...) {
   nn <- names( as.list(sys.call())[-1] )
-  if(is.null(nn)) 
-    nn <- rep("", nargs())
-  if(missing(x)) { # all args have name, none is x
+  if(is.null(nn)) { # no names, 1st arg is x...
+    L <- list(x, ...) 
+  } else if(missing(x)) { # all args have name, none is x
     L <- list(...)
   } else { # one of the arguments is x
     ix <- which(nn == "x")
@@ -98,13 +111,14 @@ f <- function(x, ...) {
   names(L) <- nn
   L
 }
-
+## CETTE SOLUTION POSE DES PROBLEMES ( on se retrouve avec des : '...' used in an incorrect context )
 g <- function(x, ...) { 
   L <- as.list(sys.call())[-1]; 
   lapply(L, eval, parent.frame(1))
+  # ^ don't do a loop here! lapply works better because calls are evaluated after! 
+  # with a loop, a call 'c(x[1], x[2])' would have x modified in the current frame...
 }
 } # ----------- end comment --------------------
-
 
 # rbind, 4 versions...
 rbind2_dd <- function(x, y, ...) {
