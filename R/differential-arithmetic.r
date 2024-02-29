@@ -67,6 +67,24 @@ sum.differential <- function(..., na.rm = FALSE) {
   L
 }
 
+# a function to compute for each variable
+# V * sum_i dx[i] / x[i] where V = prod(x)
+# this is the derivative of prod(x) ... 
+product_deriv <- function(x, dx) {
+  dx <- unclass(dx)
+  V <- prod(x)
+  D <- vector("list", length(dx))
+  for(k in seq_along(dx)) {
+    dk <- 0
+    for(i in seq_along(dx[[k]])) dk <- dk + dx[[k]][i] / x[i]
+    D[[k]] <- V * dk
+  }
+  names(D) <- names(dx)
+  class(D) <- "differential"
+  list(V, D)
+}
+
+
 # ------------------- matrix arithmetic ---------------------- 
 matrixProdDiNu <- function(x, y) {
   x <- unclass(x)
