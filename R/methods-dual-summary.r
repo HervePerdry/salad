@@ -2,33 +2,38 @@
 # --- somme ---
 #' @exportS3Method sum dual
 sum.dual <- function(x, na.rm = FALSE) {
+  vx <- x@x
   if(na.rm) {
-    i <- which(!is.na(x@x))
+    i <- which(vx)
     x <- x[i]
   }
-  x@x <- sum(x@x)
-  x@d <- sum(x@d)
-  x
+  V <- sum(vx)
+  D <- sum(x@d)
+  fastNewDual(V, D)
 }
 
+# cette méthode ne sera appelée que si un des arguments n'est pas numérique... 
+# so if x is dual : sum(x) calls S3 method, sum(1, x) calls S4, sum(1, 2) calls primitive
+setMethod("sum", c(x = "numericOrArray"), function(x, ..., na.rm = FALSE) sum.dual(c(x, ...), na.rm = na.rm))
+
 # --- produit ---
-setGeneric("prod1", function(x, na.rm) standardGeneric("prod1"))
-setMethod("prod1", c(x = "dual"), 
-    function(x, na.rm = FALSE) {
-      if(na.rm) {
-        i <- which(!is.na(x@x))
-        x <- x[i]
-      }
-      val <- prod(x@x)
-      # sum_i val * dx[i] / x[i]
-      L <- lapply(seq_along(x@x), function(i) (val/x@x[i]) * x@d[i])
-      d <- do.call(sum.differential, L)
-      x@x <- val
-      x@d <- d
+#' @exportS3Method prod dual
+prod.dual <- function(x, na.rm = FALSE) {
+  vx <- x@x
+  dx <- unclass(x@d)
+  if(na.rm) {
+    i <- which(!is.na(vx))
+    x <- x[i]
+  }
+  V <- prod(vx)
+  # sum_i val * dx[i] / x[i]
+  L <- lapply(seq_along(x@x), function(i) (val/x@x[i]) * x@d[i])
+  d <- do.call(sum.differential, L)
+  x@x <- val
+  x@d <- d
       x
-    })
-setMethod("prod1", c(x = "numericOrArray"), function(x, na.rm = FALSE) .Primitive("prod")(x, na.rm = na.rm))
-setMethod("prod", c(x = "numericOrArrayOrDual"), function(x, ..., na.rm = TRUE) prod1(c(x, ...), na.rm = na.rm))
+}
+setMethod("prod", c(x = "numericOrArray"), function(x, ..., na.rm = TRUE) prod.dual(c(x, ...), na.rm = na.rm))
 
 # --- max ---
 setGeneric("max1", function(x, na.rm) standardGeneric("max1"))
