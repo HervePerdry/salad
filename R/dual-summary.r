@@ -10,7 +10,7 @@ sum.dual <- function(x, ..., na.rm = FALSE) {
   vx <- x@x
   V <- sum(vx)
   D <- sum(x@d)
-  fastNewDual(V, D)
+  .Call(`_salad_fastNewDual`, V, D)
 }
 
 # cette méthode ne sera appelée que si un des arguments n'est pas numérique... 
@@ -38,18 +38,19 @@ max.dual <- function(x, ..., na.rm = TRUE) {
   if(...length() > 0) x <- c.dual(x, ...)
   vx <- x@x
   i <- which.max(vx)
-  fastNewDual(vx[i], x@d[i])
+  .Call(`_salad_fastNewDual`, vx[i], x@d[i])
 }
 setMethod("max", c(x = "numericOrArray"), max.dual)
 
 
 # --- min ---
+# same comment as max
 #' @exportS3Method min dual
-min.dual <- function(x, ..., na.rm = FALSE) {
+min.dual <- function(x, ..., na.rm = TRUE) {
   if(...length() > 0) x <- c.dual(x, ...)
   vx <- x@x
   i <- which.min(vx)
-  fastNewDual(vx[i], x@d[i])
+  .Call(`_salad_fastNewDual`, vx[i], x@d[i])
 }
 setMethod("min", c(x = "numericOrArray"), min.dual)
    
