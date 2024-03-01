@@ -10,7 +10,26 @@ sum_diff <- function(e1, e2) {
   L
 }
 
+neg_diff <- function(e1) {
+  e1 <- unclass(e1)
+  L <- vector("list", length(e1))
+  for(i in seq_along(e1)) L[[i]] <- -e1[[i]]
+  names(L) <- names(e1)
+  class(L) <- "differential"
+  L
+}
+
 substract_diff <- function(e1, e2) {
+  e1 <- unclass(e1)
+  e2 <- unclass(e2) 
+  L <- vector("list", length(e1))
+  for(i in seq_along(e1)) L[[i]] <- e1[[i]] - e2[[i]]
+  names(L) <- names(e1)
+  class(L) <- "differential"
+  L
+}
+
+substract_diff_ <- function(e1, e2) {
   e1 <- unclass(e1)
   L <- vector("list", length(e1))
   if(missing(e2)) { # -e1
@@ -48,7 +67,7 @@ divide_diff <- function(e1, e2) {
 `+.differential` <- sum_diff
 
 #' @export
-`-.differential` <- substract_diff
+`-.differential` <- substract_diff_
 
 #' @export
 `*.differential` <- product_diff
