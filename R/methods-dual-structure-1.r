@@ -1,6 +1,13 @@
 # --------------- structure
-setMethod("length", c(x = "dual"), function(x) length(x@x))
-setMethod("dim", c(x = "dual"), function(x) dim(x@x))
+
+#' @export
+length.dual <- function(x) length(x@x)
+
+#' @export
+dim.dual <- function(x) dim(x@x)
+
+# setMethod("length", c(x = "dual"), function(x) length(x@x))
+# setMethod("dim", c(x = "dual"), function(x) dim(x@x))
 setMethod("dim<-", c(x = "dual"),
     function(x, value) {
       dim(x@x) <- value
