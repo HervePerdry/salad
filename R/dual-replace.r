@@ -19,7 +19,7 @@ setMethod("[<-", c(x = "dual", i = "missing", j = "index", value = "dual"),
 setMethod("[<-", c(x = "dual", i = "index", j = "missing", value = "dual"),
     function(x, i, j, ..., value) {
       V <- x@x
-      if(is.null(dim(x))) { # vecteur
+      if(is.null(dim(x@x))) { # vecteur
         V[i] <- value@x
         D <- replace_diff_i(x@d, i, value = value@d)
       } else { # matrice
@@ -60,7 +60,7 @@ setMethod("[<-", c(x = "dual", i = "missing", j = "index", value = "logicalOrNum
 setMethod("[<-", c(x = "dual", i = "index", j = "missing", value = "logicalOrNumericOrArray"),
     function(x, i, j, ..., value) {
       value <- dual(value, varnames = varnames(x), constant = TRUE)
-      if(is.null(dim(x))) { # vecteur
+      if(is.null(dim(x@x))) { # vecteur
         x[i] <- value
       } else { # matrice
         if(nargs() == 3L) {  # appel x[i]<-
