@@ -35,7 +35,7 @@ sub_diff_im <- function(x, i, ..., drop = TRUE) {
   L
 }
 
-sub_diff_ij <- function(i, j, ..., drop = TRUE) {
+sub_diff_ij <- function(x, i, j, ..., drop = TRUE) {
   x <- unclass(x)
   L <- vector("list", length(x))
   for(k in seq_along(x)) L[[k]] <- x[[k]][i, j, ..., drop = drop]
