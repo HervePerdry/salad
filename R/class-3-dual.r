@@ -37,7 +37,7 @@ dual <- function(x, varnames, dx, constant = FALSE) {
   } else {
     dimnames(dx) <- dimnames(x)
   }
-  .Call(`_salad_fastNewDual`, x, dx)
+  fastNewDual(x, dx)
 }
 
 setMethod("show", "dual",

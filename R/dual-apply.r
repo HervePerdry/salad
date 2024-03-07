@@ -3,7 +3,7 @@
 unlistDuals <- function(L) {
   V <- unlist(lapply(L, \(x) x@x))
   D <- do.call(c.differential, lapply(L, \(x) x@d))
-  .Call(`_salad_fastNewDual`, V, D)
+  fastNewDual(V, D)
 }
 
 # this is mostly code from base::apply

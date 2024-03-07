@@ -12,7 +12,7 @@
 dualFun1 <- function(f, df) {
   dual.f <- function(x) {
     vx <- x@x
-    .Call(`_salad_fastNewDual`, f(vx), product_diff(df(vx), x@d))
+    fastNewDual(f(vx), product_diff(df(vx), x@d))
   }
   dual.f
 }
@@ -21,7 +21,7 @@ dualFun1 <- function(f, df) {
 logNeper <- dualFun1(log, \(x) 1/x)
 
 #' @exportS3Method exp dual
-exp.dual   <- function(x) { expx <- exp(x@x) ; .Call(`_salad_fastNewDual`, expx, product_diff(expx, x@d)) }
+exp.dual   <- function(x) { expx <- exp(x@x) ; fastNewDual(expx, product_diff(expx, x@d)) }
 
 #' @exportS3Method expm1 dual
 expm1.dual <- dualFun1(expm1, exp)

@@ -10,7 +10,7 @@ sum.dual <- function(x, ..., na.rm = FALSE) {
   vx <- x@x
   V <- sum(vx)
   D <- sum(x@d)
-  .Call(`_salad_fastNewDual`, V, D)
+  fastNewDual(V, D)
 }
 
 # cette méthode ne sera appelée que si un des arguments n'est pas numérique... 
@@ -38,7 +38,7 @@ max.dual <- function(x, ..., na.rm = TRUE) {
   if(...length() > 0) x <- c.dual(x, ...)
   vx <- x@x
   i <- which.max(vx)
-  .Call(`_salad_fastNewDual`, vx[i], x@d[i])
+  fastNewDual(vx[i], x@d[i])
 }
 setMethod("max", c(x = "numericOrArray"), max.dual)
 
@@ -50,7 +50,7 @@ min.dual <- function(x, ..., na.rm = TRUE) {
   if(...length() > 0) x <- c.dual(x, ...)
   vx <- x@x
   i <- which.min(vx)
-  .Call(`_salad_fastNewDual`, vx[i], x@d[i])
+  fastNewDual(vx[i], x@d[i])
 }
 setMethod("min", c(x = "numericOrArray"), min.dual)
    

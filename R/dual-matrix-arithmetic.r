@@ -6,14 +6,14 @@
 matrixprod_dn <- function(x, y) {
   V <- x@x %*% y
   D <- matrixProdDiNu(x@d, y)
-  .Call(`_salad_fastNewDual`, V, D)
+  fastNewDual(V, D)
 }
 
 #' @export
 matrixprod_nd <- function(x, y) {
   V <- x %*% y@x
   D <- matrixProdNuDi(x, y@d)
-  .Call(`_salad_fastNewDual`, V, D)
+  fastNewDual(V, D)
 }
 
 #' @export
@@ -21,7 +21,7 @@ matrixprod_dd <- function(x, y) {
   X <- x@x
   Y <- y@x
   L <- matrixProdDD(X, x@d, Y, y@d)
-  .Call(`_salad_fastNewDual`, X %*% Y, L)
+  fastNewDual(X %*% Y, L)
 }
 
 
@@ -57,7 +57,7 @@ matrixprod_dd <- function(x, y) {
   
   names(L) <- names(dx)
   class(L) <- "differential"
-  .Call(`_salad_fastNewDual`, X %*% Y, L)
+  fastNewDual(X %*% Y, L)
 }
 
 
@@ -66,7 +66,7 @@ matrixprod_dd <- function(x,y) {
   X <- x@x
   Y <- y@x
   d <- sum_diff(matrixProdNuDi(X, y@d) , matrixProdDiNu(x@d, Y))
-  .Call(`_salad_fastNewDual`, X %*% Y, d)
+  fastNewDual(X %*% Y, d)
 }
 }
 
