@@ -5,7 +5,7 @@ setMethod("[<-", c(x = "dual", i = "index", j = "index", value = "dual"),
       V <- x@x
       V[i,j,...] <- value@x
       D <- replace_diff_ij(x@d, i, j, ..., value = value@d)
-      .Call(`_salad_fastNewDual`, V,D)
+      fastNewDual(V,D)
     })
 
 setMethod("[<-", c(x = "dual", i = "missing", j = "index", value = "dual"),
@@ -13,7 +13,7 @@ setMethod("[<-", c(x = "dual", i = "missing", j = "index", value = "dual"),
       V <- x@x
       V[,j,...] <- value@x
       D <- replace_diff_mj(x@d, j, ..., value = value@d)
-      .Call(`_salad_fastNewDual`, V,D)
+      fastNewDual(V,D)
     })
 
 setMethod("[<-", c(x = "dual", i = "index", j = "missing", value = "dual"),
@@ -31,7 +31,7 @@ setMethod("[<-", c(x = "dual", i = "index", j = "missing", value = "dual"),
           D <- replace_diff_im(x@d, i, ..., value = value@d)
         }
       }
-      .Call(`_salad_fastNewDual`, V,D)
+      fastNewDual(V,D)
     })
 
 setMethod("[<-", c(x = "dual", i = "missing", j = "missing", value = "dual"),
@@ -39,7 +39,7 @@ setMethod("[<-", c(x = "dual", i = "missing", j = "missing", value = "dual"),
       V <- x@x
       V[,,...] <- value@x
       D <- replace_diff_mm(x@d, ..., value = value@d)
-      .Call(`_salad_fastNewDual`, V,D)
+      fastNewDual(V,D)
     })
 
 ####### dual / numeric
