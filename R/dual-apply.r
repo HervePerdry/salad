@@ -1,9 +1,9 @@
 
 # to unlist a list of duals
 unlistDuals <- function(L) {
-  x <- unlist(lapply(L, \(x) x@x))
-  d <- do.call(c, lapply(L, \(x) x@d))
-  dual(x, dx = d)
+  V <- unlist(lapply(L, \(x) x@x))
+  D <- do.call(c.differential, lapply(L, \(x) x@d))
+  .Call(`_salad_fastNewDual`, V, D)
 }
 
 # this is mostly code from base::apply
@@ -14,8 +14,8 @@ setMethod("apply", c(X = "dual"),
       simplify <- isTRUE(simplify)
       dl <- length(dim(X))
       if(!dl) stop("dim(X) must have a positive length")
-      d <- dim(X)
-      dn <- dimnames(X)
+      d <- dim.dual(X)
+      dn <- dimnames.dual(X)
       ds <- seq_len(dl)
       if(is.character(MARGIN)) {
         if(is.null(dnn <- names(dn))) 
@@ -35,12 +35,12 @@ setMethod("apply", c(X = "dual"),
       d2 <- prod(d.ans)
       if(d2 == 0L) 
         stop("apply method for dual object does not handle the case of dimension 0")
-      newX <- aperm(X, c(s.call, s.ans))
+      newX <- aperm.dual(X, c(s.call, s.ans))
       dim(newX) <- c(prod(d.call), d2)
       ans <- vector("list", d2)
       if(length(d.call) < 2L) {
         if(length(dn.call)) 
-          dimnames(newX) <- c(dn.call, list(NULL))
+          dimnames.dual(newX) <- c(dn.call, list(NULL))
         for(i in 1L:d2) {
           tmp <- forceAndCall(1, FUN, newX[, i], ...)
           if(!is.null(tmp)) ans[[i]] <- tmp
@@ -61,8 +61,7 @@ setMethod("apply", c(X = "dual"),
       if(length(MARGIN) == 1L && len.a == d2) {
         names(ans) <- if(length(dn.ans[[1L]])) dn.ans[[1L]]
         ans
-      }
-      else if(len.a == d2) 
+      } else if(len.a == d2) 
         array(ans, d.ans, dn.ans)
       else if(len.a && len.a%%d2 == 0L) {
         if(is.null(dn.ans)) 

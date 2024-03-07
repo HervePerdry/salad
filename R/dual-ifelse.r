@@ -1,8 +1,8 @@
-
  # ---- ifelse : deux parfums ...
 # la promotion en classe "dual" ne sera faite que si nécessaire (selon les valeurs de test)
 # utiliser la classe numericOrArrayOrDual permet d'éviter d'avoir deux fois la même fonction 
 # ou bien d'avoir des ambiguités de signature
+
 #' @export
 setMethod("ifelse", signature(test = "ANY", yes = "dual", no = "numericOrArrayOrDual"),
     function(test, yes, no) { 
@@ -13,7 +13,7 @@ setMethod("ifelse", signature(test = "ANY", yes = "dual", no = "numericOrArrayOr
       if(length(ypos) == 0L) {
         return(rep(no, length.out = len))
       }
-      ans <- rep(yes, length.out = len)
+      ans <- rep.dual(yes, length.out = len)
       ans[npos] <- rep(no, length.out = len)[npos]
       ans
     })
@@ -28,7 +28,7 @@ setMethod("ifelse", signature(test = "ANY", yes = "numericOrArray", no = "dual")
       if(length(npos) == 0L) {
         return(rep(yes, length.out = len))
       }
-      ans <- rep(no, length.out = len)
+      ans <- rep.dual(no, length.out = len)
       ans[ypos] <- rep(yes, length.out = len)[npos]
       ans
     })

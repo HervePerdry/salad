@@ -6,6 +6,7 @@ length.differential <- function(x) length(unclass(x)[[1]])
 #' @export
 dim.differential <- function(x) dim(unclass(x)[[1]])
 
+#' @export
 `dim.differential<-` <- function(x, value) { 
   x <- unclass(x)
   for(i in seq_along(x)) dim(x[[i]]) <- value
