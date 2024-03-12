@@ -14,10 +14,10 @@ concat0 <- function(L) {
     return(c(x,y))
   }
   if(!iyd) {
-    y <- dual(y, varnames = varnames(x), constant = TRUE)
+    y <- fastNewConstant(y, varnames.dual(x))
   } 
   if(!ixd) {
-    x <- dual(x, varnames = varnames(y), constant = TRUE)
+    x <- fastNewConstant(x, varnames.dual(y))
   }
   x@x <- c(x@x, y@x)
   x@d <- c.differential(x@d, y@d)
@@ -100,13 +100,13 @@ setMethod("rbind2", c(x = "dual", y = "dual"), rbind2_dd)
 
 setMethod("rbind2", c(x = "numericOrArray", y = "dual"),
     function(x, y, ...) { 
-      x <- dual(x, varnames = varnames(y), constant = TRUE)
+      x <- fastNewConstant(x, varnames.dual(y))
       rbind2_dd(x, y)
     })
 
 setMethod("rbind2", c(x = "dual", y = "numericOrArray"),
     function(x, y, ...) { 
-      y <- dual(y, varnames = varnames(x), constant = TRUE)
+      y <- fastNewConstant(y, varnames.dual(x))
       rbind2_dd(x, y)
     })
 
@@ -127,13 +127,13 @@ setMethod("cbind2", c(x = "dual", y = "dual"), cbind2_dd)
 
 setMethod("cbind2", c(x = "numericOrArray", y = "dual"),
     function(x, y, ...) {
-      x <- dual(x, varnames = varnames(y), constant = TRUE)
+      x <- fastNewConstant(x, varnames.dual(y))
       cbind2_dd(x, y)
     })
 
 setMethod("cbind2", c(x = "dual", y = "numericOrArray"),
     function(x, y, ...) {
-      y <- dual(x, varnames = varnames(y), constant = TRUE)
+      y <- fastNewConstant(y, varnames.dual(x))
       cbind2_dd(x, y)
     })
 
