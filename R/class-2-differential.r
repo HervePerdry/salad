@@ -14,17 +14,6 @@ differential <- function(d) {
   d
 }
 
-check_names <- function(x,y) { 
-  if(!salad('check.names')) return();
-  nx <- names(unclass(x))
-  ny <- names(unclass(y))
-  if(length(nx) != length(ny)) stop("Different set of derivatives", .Call = FALSE)
-  if(any(nx != ny)) stop("Different set of derivatives", .Call = FALSE)
-}
-
-#' @export
-varnames <- function(x) names(unclass(x))
-
 # extracts a component
 component <- function(x, var) {
   if(is.null(x[[var]])) {

@@ -45,21 +45,21 @@ setMethod("[<-", c(x = "dual", i = "missing", j = "missing", value = "dual"),
 ####### dual / numeric
 setMethod("[<-", c(x = "dual", i = "index", j = "index", value = "logicalOrNumericOrArray"), 
     function(x, i, j, ..., value) {
-      value <- dual(value, varnames = varnames(x), constant = TRUE)
+      value <- fastNewConstant(value, varnames.dual(x))
       x[i,j,...] <- value
       x
     })
 
 setMethod("[<-", c(x = "dual", i = "missing", j = "index", value = "logicalOrNumericOrArray"),
     function(x, i, j, ..., value) {
-      value <- dual(value, varnames = varnames(x), constant = TRUE)
+      value <- fastNewConstant(value, varnames.dual(x))
       x[,j,...] <- value
       x
     })
 
 setMethod("[<-", c(x = "dual", i = "index", j = "missing", value = "logicalOrNumericOrArray"),
     function(x, i, j, ..., value) {
-      value <- dual(value, varnames = varnames(x), constant = TRUE)
+      value <- fastNewConstant(value, varnames.dual(x))
       if(is.null(dim(x@x))) { # vecteur
         x[i] <- value
       } else { # matrice
@@ -74,7 +74,7 @@ setMethod("[<-", c(x = "dual", i = "index", j = "missing", value = "logicalOrNum
 
 setMethod("[<-", c(x = "dual", i = "missing", j = "missing", value = "logicalOrNumericOrArray"),
     function(x, i, j, ..., value) {
-      value <- dual(value, varnames = varnames(x), constant = TRUE)
+      value <- fastNewConstant(value, varnames.dual(x))
       x[,,...] <- value
       x
     })
