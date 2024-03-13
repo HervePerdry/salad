@@ -11,3 +11,10 @@ d.dual <- function(x, varnames) {
   L
 }
 
+#' @exportS3Method d numeric
+d.numeric <- function(x, varnames) {
+  x[] <- 0
+  L <- rep(list(x), length.out = length(varnames))
+  names(L) <- varnames
+  L
+} 
