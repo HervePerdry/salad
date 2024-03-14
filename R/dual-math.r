@@ -67,21 +67,21 @@ atan.dual <- dualFun1(atan, \(x) 1/(1 + x*x))
 
 setGeneric("atan2")
 #' @exportMethod atan2
-setMethod(atan2, c(y = "dual", x = "dual"), function(y, x) {
+setMethod("atan2", c(y = "dual", x = "dual"), function(y, x) {
   V <- atan2(y@x, x@x)
   # (x@x * y@d - y@x * x@d) / (x@x*x@x + y@x*y@x)
   D <- divide_diff(substract_diff( product_diff(x@x, y@d), product_diff(y@x, x@d) ), x@x*x@x + y@x*y@x) 
   fastNewDual(V, D)
 })
 
-setMethod(atan2, c(y = "dual", x = "numericOrArray"), function(y, x) {
+setMethod("atan2", c(y = "dual", x = "numericOrArray"), function(y, x) {
   V <- atan2(y@x, x)
   # (x * y@d) / (x*x + y@x*y@x)
   D <- divide_diff(product_diff(x, y@d), x*x + y@x*y@x)
   fastNewDual(V, D)
 })
 
-setMethod(atan2, c(y = "numericOrArray", x = "dual"), function(y, x) {
+setMethod("atan2", c(y = "numericOrArray", x = "dual"), function(y, x) {
   V <- atan2(y, x@x)
   #  -(y * x@d) / (x@x*x@x + y*y)
   D <- divide_diff(product_diff(-y , x@d), x@x*x@x + y*y)
@@ -164,4 +164,82 @@ psigamma.dual <- function(x, deriv = 0) {
 
 #' @exportMethod psigamma
 setMethod("psigamma", c(x = "dual"), psigamma.dual)
+
+
+# ------------------ beta lbeta
+
+setGeneric("beta")
+#' @exportMethod beta
+setMethod("beta", c(a = "dual", b = "dual"), function(a, b) {
+  psiapb <- digamma(a@x + b@x)
+  V <- beta(a@x, b@x)
+  D <- sum_diff( product_diff(V*(digamma(a) - psiapb), a@d), product_diff(V*(digamma(b) - psiapb), b@d) )
+  fastNewDual(V, D)
+})
+
+setMethod("beta", c(a = "dual", b = "numericOrArray"), function(a, b) {
+  psiapb <- digamma(a@x + b)
+  V <- beta(a@x, b)
+  D <- product_diff(V*(digamma(a) - psiapb), a@d)
+  fastNewDual(V, D)
+})
+
+setMethod("beta", c(a = "numericOrArray", b = "dual"), function(a, b) {
+  psiapb <- digamma(a + b@x)
+  V <- beta(a, b@x)
+  D <- product_diff(V*(digamma(b) - psiapb), b@d)
+  fastNewDual(V, D)
+})
+
+
+setGeneric("lbeta")
+#' @exportMethod lbeta
+setMethod("lbeta", c(a = "dual", b = "dual"), function(a, b) {
+  psiapb <- digamma(a@x + b@x)
+  V <- lbeta(a@x, b@x)
+  D <- sum_diff( product_diff(digamma(a) - psiapb, a@d), product_diff(digamma(b) - psiapb, b@d) )
+  fastNewDual(V, D)
+})
+
+setMethod("lbeta", c(a = "dual", b = "numericOrArray"), function(a, b) {
+  psiapb <- digamma(a@x + b)
+  V <- lbeta(a@x, b)
+  D <- product_diff(digamma(a) - psiapb, a@d)
+  fastNewDual(V, D)
+})
+
+setMethod("lbeta", c(a = "numericOrArray", b = "dual"), function(a, b) {
+  psiapb <- digamma(a + b@x)
+  V <- lbeta(a, b@x)
+  D <- product_diff(digamma(b) - psiapb, b@d)
+  fastNewDual(V, D)
+})
+
+
+# ------------------ factorial lfactorial
+
+#' @exportS3Method factorial dual
+factorial.dual <- function(x) { factorialx <- factorial(x@x) ; fastNewDual(factorialx, product_diff(factorialx * digamma(x@x + 1), x@d)) }
+
+#' @exportS3Method lfactorial dual
+lfactorial.dual <- dualFun1(lfactorial, \(x) gigamma(x+1))
+
+
+# ------------------ choose lchoose
+setGeneric("choose")
+#' @exportMethod choose
+setMethod("choose", c(n = "dual", k = "numeric"), function(n, k) {
+  V <- choose(n@x, k)
+  D <- product_diff(V * (digamma(n@x + 1) - digamma(n@x - k + 1)), n@d)
+  fastNewDual(V, D)
+})
+
+setGeneric("lchoose")
+#' @exportMethod lchoose
+setMethod("lchoose", c(n = "dual", k = "numeric"), function(n, k) {
+  V <- lchoose(n@x, k)
+  D <- product_diff(digamma(n@x + 1) - digamma(n@x - k + 1), n@d)
+  fastNewDual(V, D)
+})
+
 
