@@ -24,12 +24,24 @@ matrixprod_dd <- function(x, y) {
   fastNewDual(X %*% Y, L)
 }
 
+#' @exportMethod "%*%"
+#' @exportMethod crossprod
+#' @exportMethod tcrossprod
+
 
 setMethod("%*%", c(x = "dual", y = "numericOrArray"), matrixprod_dn)
 setMethod("%*%", c(x = "numericOrArray", y  = "dual"), matrixprod_nd)
 setMethod("%*%", c(x = "dual", y = "dual"), matrixprod_dd)
 
+setMethod("crossprod",  signature(x="dual",y="dual"),           function(x,y) matrixprod_dd(t(x), y))
+setMethod("crossprod",  signature(x="dual",y="numericOrArray"), function(x,y) matrixprod_dn(t(x), y))
+setMethod("crossprod",  signature(x="numericOrArray",y="dual"), function(x,y) matrixprod_nd(t(x), y))
+setMethod("crossprod",  signature(x="dual",y="missing"),        function(x,y) matrixprod_dd(t(x), x))
 
+setMethod("tcrossprod", signature(x="dual",y="dual"),           function(x,y) matrixprod_dd(x, t(y)))
+setMethod("tcrossprod", signature(x="dual",y="numericOrArray"), function(x,y) matrixprod_dn(x, t(y)))
+setMethod("tcrossprod", signature(x="numericOrArray",y="dual"), function(x,y) matrixprod_nd(x, t(y)))
+setMethod("tcrossprod", signature(x="dual",y="missing"),        function(x,y) matrixprod_dd(x, t(x)))
 
 
 if(FALSE) { 

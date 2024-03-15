@@ -92,11 +92,14 @@ sum.differential <- function(..., na.rm = FALSE) {
 product_deriv <- function(x, dx) {
   dx <- unclass(dx)
   V <- prod(x)
+  if(V == 0) {
+    a <- prodskip1(x)
+  } else {
+    a <- V/x
+  }
   D <- vector("list", length(dx))
   for(k in seq_along(dx)) {
-    dk <- 0
-    for(i in seq_along(dx[[k]])) dk <- dk + dx[[k]][i] / x[i]
-    D[[k]] <- V * dk
+    D[[k]] <- sum(a * dx[[k]])
   }
   names(D) <- names(dx)
   class(D) <- "differential"
@@ -124,15 +127,14 @@ matrixProdNuDi <- function(x, y) {
 }
 
 # on suppose que l'appel est soit numeric %*% diff, soit diff %*% num
-#' @export
-`%*%.differential` <- function(x, y) { browser()
-  if(class(x) == "differential")
-    matrixProdDiNu(x, y) 
-  else
-    matrixProdNuDi(x, y)
-}
+# `%*%.differential` <- function(x, y) { 
+#   if(class(x) == "differential")
+#     matrixProdDiNu(x, y) 
+#   else
+#     matrixProdNuDi(x, y)
+# }
 
-# une fonction pour calculer X dY + Y dX 
+# une fonction pour calculer dX Y + X dY
 # voir aussi matrixprod_dd dans les méthodes pour dual
 matrixProdDD <- function(X, dX, Y, dY) {
   dX <- unclass(dX)
