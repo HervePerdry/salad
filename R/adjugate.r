@@ -17,7 +17,9 @@ tadjugate <- function(x) {
 if(FALSE) {
 # this is mainly ok but bad results are obtained when the multiplicity of zero is > 1
 # eg for diag(c(1,1,0,0)) : instead of getting only zeros, we get epsilons...
-# perturbating on only the diagonal of U doesn't solve completely the problem
+# perturbating only the diagonal of U doesn't solve completely the problem
+# Agir différemment selon s'il y a un seul zéro sur la diagonale, ou plusieurs
+# pourrait fonctionner mais je vais rester à la version SVD...
 det.adjugate(x) <- function(x) {
   lux <- Matrix::lu(x, warnSing = FALSE)
   detx <- det(lux)
