@@ -40,7 +40,7 @@ setMethod("array", c(data = "dual"),
 as.matrix.dual <- function(x, ...) {
   if(salad("drop.derivatives")) {
     warning("Dropping derivatives in as.matrix. See ?salad to change this behaviour")
-    return(as.matrix(x@x))
+    return(as.matrix(x@x, ...))
   }
   if(is.null(dim(x))) dim(x) <- c(length(x), 1)
   x
@@ -53,10 +53,10 @@ setMethod("as.matrix", "dual", as.matrix.dual)
 ### --------- as.vector
 
 #' @exportS3Method as.vector dual
-as.vector.dual <- function(x) {
+as.vector.dual <- function(x, mode = "any") {
   if(salad("drop.derivatives")) {
     warning("Dropping derivatives in as.vector. See ?salad to change this behaviour")
-    return(as.vector(x@x))
+    return(as.vector(x@x, mode))
   }
   dim(x) <- NULL
   x

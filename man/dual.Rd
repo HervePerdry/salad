@@ -2,10 +2,60 @@
 % Please edit documentation in R/dual.r
 \name{dual}
 \alias{dual}
-\title{Create dual object}
+\title{Dual objects}
 \usage{
 dual(x, varnames, dx, constant = FALSE)
 }
+\arguments{
+\item{x}{a numeric object (vector, matrix, or array)}
+
+\item{varnames}{(optional) the name of the variables in x}
+
+\item{dx}{(optional) a list of derivatives for the elements of x}
+
+\item{constant}{if 'TRUE', then a constant is returned.}
+}
+\value{
+an object of class 'dual'
+}
 \description{
-Create dual object
+Create a dual object
+}
+\details{
+The basic usage is \code{dual(x)} which will create an object of
+class 'dual' with unit derivatives in each of its components. The variable
+names will be derived from the names of \code{x}, or generated in the form 
+\code{x1}, \code{x2}, etc.
+
+Another possible usage is \code{dual(x, varnames = c('x1', 'x2'), constant = TRUE)}
+which returns an object with null derivatives in \code{x1} and \code{x2}.
+
+Finally, a list of derivatives can be defined using option \code{dx}.
+}
+\examples{
+# simple usage
+x <- dual( c(1,2) )
+x
+d(x)
+x <- dual(matrix(c(1,2,3,4), 2, 2))
+x
+d(x, "x1.1")
+
+# using an object with names
+x <- dual( c(a = 1, b = 2) )
+x
+d(x)
+
+# generate a constant 
+x <- dual(1, varnames = c("x1", "x2"), constant = TRUE)
+
+# specify dx
+x <- dual(c(1,2), dx = list(x1 = c(1,1)))
+x
+d(x)
+# this is equivalent to :
+x <- dual(1)
+x <- c(x, x + 1)
+x
+d(x)
 }

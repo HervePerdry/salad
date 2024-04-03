@@ -4,7 +4,7 @@
 sum.dual <- function(x, ..., na.rm = FALSE) {
   if(...length() > 0) x <- c.dual(x, ...)
   if(na.rm) {
-    i <- which(vx)
+    i <- which(!is.na(x@x))
     x <- x[i]
   }
   vx <- x@x
@@ -22,7 +22,7 @@ setMethod("sum", c(x = "numericOrArray"), sum.dual) # function(x, ..., na.rm = F
 prod.dual <- function(x, ..., na.rm = FALSE) {
   if(...length() > 0) x <- c.dual(x, ...)
   if(na.rm) {
-    i <- which(!is.na(vx))
+    i <- which(!is.na(x@x))
     x <- x[i]
   }
   # the efficient computation has to be done at the differential object level...

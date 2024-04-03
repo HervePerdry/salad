@@ -26,16 +26,16 @@ expm1.dual <- dualFun1(expm1, exp)
 log.dual   <- function(x, base = exp(1)) if(missing(base)) logNeper(x) else logNeper(x)/log(base)
 
 #' @exportS3Method log10 dual
-log10.dual <- dualFun1(log10, \(x) 1/(x*2.302585092994046))
+log10.dual <- dualFun1(log10, \(x) 0.43429448190325176/x)
 
 #' @exportS3Method log2 dual
-log2.dual  <- dualFun1(log2, \(x) 1/(x*0.6931471805599453))
+log2.dual  <- dualFun1(log2, \(x) 1.4426950408889634/x)
 
 #' @exportS3Method log1p dual
 log1p.dual <- dualFun1(log1p, \(x) 1/(1+x))
 
 #' @exportS3Method sqrt dual
-sqrt.dual <- function(x) { sqrtx <- sqrt(x); fastNewDual(sqrtx, productdiff(0.5/sqrtx, x@d)) }
+sqrt.dual <- function(x) { sqrtx <- sqrt(x); fastNewDual(sqrtx, product_diff(0.5/sqrtx, x@d)) }
 
 # ------------------ trigo
 #' @exportS3Method cos dual
@@ -136,8 +136,8 @@ floor.dual <- function(x) {
 }
 
 #' @exportS3Method trunc dual
-trunc.dual <- function(x) {
-  V <- trunc(x@x)
+trunc.dual <- function(x, ...) {
+  V <- trunc(x@x, ...)
   D <- product_diff(ifelse(V == x@x, Inf, 0), x@d)
   fastNewDual(V, nanToZero(D))
 }
@@ -156,7 +156,7 @@ digamma.dual <- dualFun1(digamma, trigamma)
 #' @exportS3Method trigamma dual
 trigamma.dual <- dualFun1(trigamma, \(x) psigamma(x, 2))
 
-#' @export 
+#' @exportS3Method psigamma dual
 psigamma.dual <- function(x, deriv = 0) {
   psigammax <- psigamma(x@x, deriv)
   fastNewDual(psigammax, product_diff(psigamma(x@x, deriv + 1), x@d))

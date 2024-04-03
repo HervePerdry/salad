@@ -2,7 +2,7 @@
 #[] @useDynLib salad, .registration=TRUE
 #[] @importFrom Rcpp evalCpp
 
-#' @importFrom methods new
+#' @importFrom methods new is rbind2 callGeneric
 NULL
 
 .onLoad <- function(libname, pkgname) { 

@@ -56,7 +56,6 @@ stopifnot( salad:::test_near_equality(B, B0) )
 stopifnot( salad:::test_near_equality(C, C0) )
 stopifnot( salad:::test_near_equality(D, D0) )
 
-mb <- microbenchmark::microbenchmark( A %*% runif(5), runif(5) %*% A, A %*% A )
-print(mb)
-
+# mb <- microbenchmark::microbenchmark( A %*% runif(5), runif(5) %*% A, A %*% A )
+# print(mb)
 

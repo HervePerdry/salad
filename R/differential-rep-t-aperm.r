@@ -1,5 +1,4 @@
 # rep
-#' @export
 rep.differential <- function(x, ...) {
   x <- unclass(x)
   L <- vector("list", length(x))
@@ -11,7 +10,6 @@ rep.differential <- function(x, ...) {
 
 
 # transposition
-#' @exportS3Method t differential
 t.differential <- function(x) {
   x <- unclass(x)
   L <- vector("list", length(x))
@@ -22,7 +20,6 @@ t.differential <- function(x) {
 }
 
 # aperm
-#' @exportS3Method aperm differential
 aperm.differential <- function(a, perm = NULL, resize = TRUE, ...) {
   a <- unclass(a)
   x <- vector("list", length(a))

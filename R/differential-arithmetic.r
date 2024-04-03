@@ -63,19 +63,14 @@ divide_diff <- function(e1, e2) {
   L
 }
 
-#' @export
 `+.differential` <- sum_diff
 
-#' @export
 `-.differential` <- substract_diff_
 
-#' @export
 `*.differential` <- product_diff
 
-#' @export
 `/.differential` <- divide_diff
 
-#' @export
 sum.differential <- function(..., na.rm = FALSE) { 
   x <- c.differential(...)
   x <- unclass(x)

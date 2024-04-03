@@ -45,13 +45,12 @@ T0 <- new("dual", x = c(1, 16, 9, 36, 4, 25, 1, 16, 243, 3, 81, 27),
 stopifnot(salad:::test_near_equality(T, T0))
 
 
-mb <- microbenchmark::microbenchmark(A + B, A * B, A - B, A / B, -A, times = 1000)
-print(mb)
+# mb <- microbenchmark::microbenchmark(A + B, A * B, A - B, A / B, -A, times = 1000)
+# print(mb)
 
-mb <- microbenchmark::microbenchmark(x**2, A**B, 3**A, times = 1000)
-print(mb)
+# mb <- microbenchmark::microbenchmark(x**2, A**B, 3**A, times = 1000)
+# print(mb)
 
-mb <- microbenchmark::microbenchmark((2 + B) + (A - 1) + (1 - B*4) / 3 + 5 / (2*A + 3), times = 1000)
-print(mb)
-
+# mb <- microbenchmark::microbenchmark((2 + B) + (A - 1) + (1 - B*4) / 3 + 5 / (2*A + 3), times = 1000)
+# print(mb)
 

@@ -39,7 +39,6 @@ replace_diff_ij <- function(x, i, j, ..., value) {
   x
 }
 
-#' @export
 `[<-.differential` <- function(x, i, j, ..., value) { 
   mi <- missing(i)
   mj <- missing(j)

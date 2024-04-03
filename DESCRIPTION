@@ -2,14 +2,15 @@ Package: salad
 Type: Package
 Title: Simple Automatic Differenciation
 Version: 1.0
-Date: 2024-02-14
+Date: 2024-04-03
 Author: Hervé Perdry
 Maintainer: Hervé Perdry <herve.perdry@universite-paris-saclay.fr>
-Description: This package defines a flexible S4 class for automatic differenciation.
-  It handles vector and matrices. The method used is forward automatic differenciation. 
+Description: Defines a flexible S4 class for automatic differenciation.
+  Handles vector and matrices. The method used is forward automatic differenciation. 
   In most cases, functions written without automatic differenciation in mind can be 
-  use with no change. 
-License: MIT
+  used with no change. 
+License: MIT + file LICENSE
 Encoding: UTF-8
 Depends: methods
+Imports: stats
 RoxygenNote: 7.2.3

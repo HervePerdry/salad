@@ -1,4 +1,4 @@
-#' @export
+#' @exportS3Method det dual
 det.dual <- function(x) { 
   V <- det(x@x)
   # using sum(t(X)*Y) = trace(X %*% Y)
@@ -17,8 +17,8 @@ det.dual <- function(x) {
 setMethod("det", "dual", det.dual)
 
 #' @exportS3Method determinant dual
-determinant.dual <- function(x, logarithm = TRUE) { 
-  detx <- determinant(x@x, logarithm)
+determinant.dual <- function(x, logarithm = TRUE, ...) { 
+  detx <- determinant(x@x, logarithm, ...)
   if(logarithm) {
     if(!is.infinite(detx$modulus)) {
       A <- t(solve(x@x))

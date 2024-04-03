@@ -1,5 +1,4 @@
 # ------------------- concatenation  -----------
-#' @export
 c.differential <- function(x, ...) {
   if(nargs() == 1L) return(x)
   y <- c.differential(...)
@@ -13,7 +12,6 @@ c.differential <- function(x, ...) {
 }
 
 # ------------------- binding methods -----------
-#' @export
 rbind.differential <- function(x, ...) {
   L <- list(...)
   if(length(L) == 0) {
@@ -30,7 +28,6 @@ rbind.differential <- function(x, ...) {
   L
 }
 
-#' @export
 cbind.differential <- function(x, ...) {
   L <- list(...)
   if(length(L) == 0) {

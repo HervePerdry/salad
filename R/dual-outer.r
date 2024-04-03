@@ -1,6 +1,6 @@
 
 # this is the code of base::outer with almost no change...
-#' @export
+#' @exportS3Method outer dual
 outer.dual <- function(X, Y, FUN = "*", ...) {
   if(!is.null(dim(X))) {
     dX <- dim(X)

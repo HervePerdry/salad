@@ -1,12 +1,9 @@
 # --------------- length and dimension
 
-#' @export
 length.differential <- function(x) length(unclass(x)[[1]])
 
-#' @export
 dim.differential <- function(x) dim(unclass(x)[[1]])
 
-#' @export
 `dim.differential<-` <- function(x, value) { 
   x <- unclass(x)
   for(i in seq_along(x)) dim(x[[i]]) <- value
@@ -16,10 +13,8 @@ dim.differential <- function(x) dim(unclass(x)[[1]])
 
 # --------------- dimnames
 
-#' @export
 dimnames.differential <- function(x) dimnames(x[[1]])
 
-#' @export
 `dimnames.differential<-` <- function(x, value) {
   x <- unclass(x)
   if(!is.null(dim(x[[1]]))) { # matrices
@@ -31,10 +26,8 @@ dimnames.differential <- function(x) dimnames(x[[1]])
 
 # --------------- names 
 
-#' @export
 names.differential <- function(x) names(x[[1]])
 
-#' @export
 `names.differential<-` <- function(x, value) {
   x <- unclass(x)
   if(is.null(dim(x[[1]]))) { # vecteurs

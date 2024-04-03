@@ -3,7 +3,6 @@ set.seed(1)
 x <- dual( runif(25) )
 A <- matrix( rep(x, 25) + runif(25*25), 25, 25)
 
-salad(check.names = FALSE)
 # vA <- value(A)
 # dA <- d(A)
 
@@ -43,8 +42,6 @@ for(i in 1:5) test <- test & all(Z1[[i]] == Z2[[i]])
 for(i in 1:5) test <- test & all(Z1[[i]] == Z3[[i]])
 stopifnot(test)
 
-mb <- microbenchmark::microbenchmark(f1(A, x), f2(A, x), f3(A, x), times = 1e4)
-
-print(mb)
-
+# mb <- microbenchmark::microbenchmark(f1(A, x), f2(A, x), f3(A, x), times = 1e4)
+# print(mb)
 

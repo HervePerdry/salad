@@ -44,7 +44,6 @@ sub_diff_ij <- function(x, i, j, ..., drop = TRUE) {
   L
 }
 
-#' @export
 `[.differential` <- function(x, i, j, ..., drop = TRUE) {
   x <- unclass(x)
   L <- vector("list", length(x))

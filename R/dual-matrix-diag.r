@@ -1,5 +1,4 @@
 #' @exportS3Method diag dual
-#' @export
 diag.dual <- function(x) {
   V <- diag(x@x)
   D <- diag_diff(x@d)
