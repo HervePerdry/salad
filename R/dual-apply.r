@@ -1,10 +1,22 @@
-
-# to unlist a list of duals
-unlistDuals <- function(L) {
-  V <- unlist(lapply(L, \(x) x@x))
-  D <- do.call(c.differential, lapply(L, \(x) x@d))
-  fastNewDual(V, D)
-}
+#' @title Apply functions over array margins of dual objects
+#'
+#' @description This method generalizes `base::apply` to dual objects.
+#'
+#' @param X a dual object (with array or matrix shape)
+#' @param MARGIN a vector giving the subscript which the function will be applied over
+#' @param FUN the function to be applied
+#' @param ... extra arguments for `FUN`
+#' @param simplify a logical indicating whether the results should be simplified
+#'
+#' @seealso \code{\link{apply}}
+#' 
+#' @examples A <- matrix( c(1,2,3,4), 2, 2)
+#' x <- dual(A)
+#' cs <- apply(x, 2, sum)
+#' cs
+#' d(cs)
+#' # prefered method for summing over the columns
+#' colSums(x) 
 
 # this is mostly code from base::apply
 #' @export
@@ -76,4 +88,12 @@ setMethod("apply", c(X = "dual"),
       }
       else ans
     })
-  
+ 
+# to unlist a list of duals
+unlistDuals <- function(L) {
+  V <- unlist(lapply(L, \(x) x@x))
+  D <- do.call(c.differential, lapply(L, \(x) x@d))
+  fastNewDual(V, D)
+}
+
+ 
