@@ -1,9 +1,9 @@
 
-diag_diff <- function(x) {
+diag_diff <- function(x, nrow, ncol, names = TRUE) {
   x <- unclass(x)
   L <- vector("list", length(x))
   for(i in seq_along(x))
-    L[[i]] <- diag(x[[i]])
+    L[[i]] <- diag(x[[i]], nrow, ncol, names)
   names(L) <- names(x)
   class(L) <- "differential"
   L

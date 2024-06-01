@@ -19,15 +19,15 @@ Methods have been defined in order to allow the concatenation
 of `dual` objects together and with constant objects.
 }
 \examples{
-x <- dual( c(1,2,0) )
+x <- dual( 1 )
 # concatenation with a constant
-x <- c(x, 1)
+x <- c(x, 2)
 x
 d(x)
 # concatenation of dual objects
-S1 <- sum( x[1:2] )
-S2 <- sum( x[3:4] )
-y <- c(a = S1, b = S2)  # named arguments are allowed
+x1 <- sum(x)
+x2 <- sum(x**2)
+y <- c(a = x1, b = x2)  # you can use named arguments
 y
 d(y)
 }

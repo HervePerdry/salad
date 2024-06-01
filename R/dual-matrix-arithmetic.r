@@ -1,3 +1,19 @@
+#' @title Matrix Arithmetic
+#' @name matmult
+#' @rdname matmult
+#'
+#' @description Methods and functions for dual matrix arithmetic
+#' @param x,y Dual or numeric matrices or vectors
+#'
+#' @details All methods are the analog of the corresponding methods for matrices.
+#' The functions `matrixprod_dd`, `matrixprod_nd` and `matrixprod_dn` are for multiplication
+#' of two dual objects, of a numeric and a dual object, or of a dual and a numeric object,
+#' respectively. You may use these functions to save the method dispatching time.
+#'
+#' @examples x <- dual( matrix(c(0,1,3,1), 2, 2) )
+#' y <- x %*% c(2,-2)
+#' d(y, "x1.1")
+
 # Note
 # It is a bit faster to compute D inside the function instead of simply calling the 
 # relevant functions matrixProdDiNu matrixProdNuDi 
@@ -9,6 +25,7 @@ matrixprod_dn <- function(x, y) {
   fastNewDual(V, D)
 }
 
+#' @rdname matmult
 #' @export
 matrixprod_nd <- function(x, y) {
   V <- x %*% y@x
@@ -16,6 +33,7 @@ matrixprod_nd <- function(x, y) {
   fastNewDual(V, D)
 }
 
+#' @rdname matmult
 #' @export
 matrixprod_dd <- function(x, y) {
   X <- x@x
@@ -24,23 +42,32 @@ matrixprod_dd <- function(x, y) {
   fastNewDual(X %*% Y, L)
 }
 
+#' @rdname matmult
 #' @exportMethod "%*%"
-#' @exportMethod crossprod
-#' @exportMethod tcrossprod
-
-
 setMethod("%*%", c(x = "dual", y = "numericOrArray"), matrixprod_dn)
+#' @rdname matmult
 setMethod("%*%", c(x = "numericOrArray", y  = "dual"), matrixprod_nd)
+#' @rdname matmult
 setMethod("%*%", c(x = "dual", y = "dual"), matrixprod_dd)
 
+#' @rdname matmult
+#' @exportMethod crossprod
 setMethod("crossprod",  signature(x="dual",y="dual"),           function(x,y) matrixprod_dd(t(x), y))
+#' @rdname matmult
 setMethod("crossprod",  signature(x="dual",y="numericOrArray"), function(x,y) matrixprod_dn(t(x), y))
+#' @rdname matmult
 setMethod("crossprod",  signature(x="numericOrArray",y="dual"), function(x,y) matrixprod_nd(t(x), y))
+#' @rdname matmult
 setMethod("crossprod",  signature(x="dual",y="missing"),        function(x,y) matrixprod_dd(t(x), x))
 
+#' @rdname matmult
+#' @exportMethod tcrossprod
 setMethod("tcrossprod", signature(x="dual",y="dual"),           function(x,y) matrixprod_dd(x, t(y)))
+#' @rdname matmult
 setMethod("tcrossprod", signature(x="dual",y="numericOrArray"), function(x,y) matrixprod_dn(x, t(y)))
+#' @rdname matmult
 setMethod("tcrossprod", signature(x="numericOrArray",y="dual"), function(x,y) matrixprod_nd(x, t(y)))
+#' @rdname matmult
 setMethod("tcrossprod", signature(x="dual",y="missing"),        function(x,y) matrixprod_dd(x, t(x)))
 
 

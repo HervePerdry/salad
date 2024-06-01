@@ -1,7 +1,7 @@
 #' @exportS3Method diag dual
-diag.dual <- function(x) {
-  V <- diag(x@x)
-  D <- diag_diff(x@d)
+diag.dual <- function(x, nrow, ncol, names = TRUE) {
+  V <- diag(x@x, nrow, ncol, names)
+  D <- diag_diff(x@d, nrow, ncol)
   fastNewDual(V, D)
 }
 

@@ -1,5 +1,22 @@
+#' @name inversion
+#' @rdname inversion
+#' @title Determinant and matrix inversion for dual matrices
+#'
+#' @param x a dual matrix
+#' @param logarithm if 'TRUE', get logarithm of modulus of determinant
+#' @param a,b dual or numerical arguments for `solve`
+#' @param ... extra parameters (ignored)
+#'
+#' @description Metthods extending in a natural way the corresponding methods for numeric matrices.
+#'
+#' @examples x <- dual( matrix(c(1,2,0,3), 2, 2) )
+#' det(x)
+#' d(det(x), "x1.1")
+#' solve(x)
+#' d(solve(x), "x1.1")
+#'
 #' @exportS3Method det dual
-det.dual <- function(x) { 
+det.dual <- function(x, ...) { 
   V <- det(x@x)
   # using sum(t(X)*Y) = trace(X %*% Y)
   if(V != 0) {
@@ -13,9 +30,11 @@ det.dual <- function(x) {
   class(D) <- "differential"
   fastNewDual(V, D)
 }
+#' @rdname inversion
 #' @export
 setMethod("det", "dual", det.dual)
 
+#' @rdname inversion
 #' @exportS3Method determinant dual
 determinant.dual <- function(x, logarithm = TRUE, ...) { 
   detx <- determinant(x@x, logarithm, ...)
@@ -44,6 +63,7 @@ determinant.dual <- function(x, logarithm = TRUE, ...) {
   detx
 }
 
+#' @rdname inversion
 #' @export
 setMethod("solve", c(a = "dual", b = "dual"), function(a, b, ...) {
   Ai <- solve(a@x, ...)
@@ -52,18 +72,24 @@ setMethod("solve", c(a = "dual", b = "dual"), function(a, b, ...) {
   fastNewDual(Ai %*% b@x, substract_diff(matrixProdNuDi(Ai, dB) , matrixProdDiNu( matrixProdNuDi(Ai, dA), Ai %*% b@x )))
 })
 
+#' @rdname inversion
+#' @export
 setMethod("solve", c(a = "dual", b = "missing"), function(a, b, ...) {
   Ai <- solve(a@x, ...)
   dA <- a@d
   fastNewDual(Ai, matrixProdDiNu(matrixProdNuDi(-Ai, dA), Ai))
 })
 
+#' @rdname inversion
+#' @export
 setMethod("solve", c(a = "numericOrArray", b = "dual"), function(a, b, ...) {
   Ai <- solve(a, ...)
   dB <- b@d
   fastNewDual(Ai %*% b@x, matrixProdNuDi(Ai, dB))
 })
 
+#' @rdname inversion
+#' @export
 setMethod("solve", c(a = "dual", b = "numericOrArray"), function(a, b, ...) {
   Ai <- solve(a@x, ...)
   dA <- a@d

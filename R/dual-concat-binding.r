@@ -12,15 +12,15 @@
 #' @description Methods have been defined in order to allow the concatenation 
 #' of `dual` objects together and with constant objects.
 #' 
-#' @examples x <- dual( c(1,2,0) )
+#' @examples x <- dual( 1 )
 #' # concatenation with a constant
-#' x <- c(x, 1)
+#' x <- c(x, 2)
 #' x
 #' d(x)
 #' # concatenation of dual objects
-#' S1 <- sum( x[1:2] )
-#' S2 <- sum( x[3:4] )
-#' y <- c(a = S1, b = S2)  # named arguments are allowed
+#' x1 <- sum(x)
+#' x2 <- sum(x**2)
+#' y <- c(a = x1, b = x2)  # you can use named arguments
 #' y
 #' d(y)
  
@@ -116,26 +116,66 @@ g <- function(x, ...) {
 }
 } # ----------- end comment --------------------
 
+
+#' @name bind
+#' @rdname bind
+#' @title Binding methods for dual objects
+#'
+#' @aliases rbind2,dual,dual-method
+#' @aliases rbind2,numericOrArray,dual-method
+#' @aliases rbind2,dual,numericOrArray-method
+#' @aliases rbind2,dual,missing-method
+#' @aliases cbind2,dual,dual-method
+#' @aliases cbind2,numericOrArray,dual-method
+#' @aliases cbind2,dual,numericOrArray-method
+#' @aliases cbind2,dual,missing-method
+#'
+#' @usage \S4method{rbind2}{dual,dual}(x,y,...)
+#' @usage \S4method{rbind2}{dual,numericOrArray}(x,y,...)
+#' @usage \S4method{rbind2}{numericOrArray,dual}(x,y,...)
+#' @usage \S4method{rbind2}{dual,missing}(x,y,...)
+#' @usage \S4method{cbind2}{dual,dual}(x,y,...)
+#' @usage \S4method{cbind2}{dual,numericOrArray}(x,y,...)
+#' @usage \S4method{cbind2}{numericOrArray,dual}(x,y,...)
+#' @usage \S4method{cbind2}{dual,missing}(x,y,...)
+#'
+#' @param x,y dual or numeric objects
+#' @param ... extra parameters (ignored)
+#'
+#' @description Methods allowing to use `cbind` and `rbind` with dual objects.
+#'
+#' @examples x <- dual( c(1, 3) )
+#' y <- cbind(x, 2*x+1, 3*x+2, c(0,1))
+#' y
+#' d(y, "x1")
+#' 
+#'
+
 # rbind, 4 versions...
 rbind2_dd <- function(x, y, ...) {
   x@x <- rbind2(x@x, y@x)
   x@d <- rbind.differential(x@d, y@d)
   x
 }
+
+#' @export
 setMethod("rbind2", c(x = "dual", y = "dual"), rbind2_dd)
 
+#' @export
 setMethod("rbind2", c(x = "numericOrArray", y = "dual"),
     function(x, y, ...) { 
       x <- fastNewConstant(x, varnames.dual(y))
       rbind2_dd(x, y)
     })
 
+#' @export
 setMethod("rbind2", c(x = "dual", y = "numericOrArray"),
     function(x, y, ...) { 
       y <- fastNewConstant(y, varnames.dual(x))
       rbind2_dd(x, y)
     })
 
+#' @export
 setMethod("rbind2", c(x = "dual", y = "missing"), 
     function(x, ...) {
       if(is.null(dim(x))) dim(x) <- c(1, length(x))
@@ -149,20 +189,24 @@ cbind2_dd <- function(x, y, ...) {
   x
 }
 
+#' @export
 setMethod("cbind2", c(x = "dual", y = "dual"), cbind2_dd)
 
+#' @export
 setMethod("cbind2", c(x = "numericOrArray", y = "dual"),
     function(x, y, ...) {
       x <- fastNewConstant(x, varnames.dual(y))
       cbind2_dd(x, y)
     })
 
+#' @export
 setMethod("cbind2", c(x = "dual", y = "numericOrArray"),
     function(x, y, ...) {
       y <- fastNewConstant(y, varnames.dual(x))
       cbind2_dd(x, y)
     })
 
+#' @export
 setMethod("cbind2", c(x = "dual", y = "missing"), 
     function(x, ...) {
       if(is.null(dim(x))) dim(x) <- c(length(x), 1)
