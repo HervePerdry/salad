@@ -28,10 +28,26 @@ NULL
 setMethod("+", c(e1 = "dual", e2 = "dual"), function(e1, e2) fastNewDual(e1@x + e2@x, sum_diff(e1@d, e2@d)))
 
 #' @rdname Arithmetic
-setMethod("+", c(e1 = "dual", e2 = "numericOrArray"), function(e1, e2) fastNewDual(e1@x + e2, e1@d))
+setMethod("+", c(e1 = "dual", e2 = "numericOrArray"), 
+             function(e1, e2) {
+               x = e1@x + e2; 
+               le <- length(x); 
+               if(le != length(e1@x))
+                 fastNewDual(x, rep.differential(e1@d, length = le)) 
+               else 
+                 fastNewDual(x, e1@d)
+             })
 
 #' @rdname Arithmetic
-setMethod("+", c(e1 = "numericOrArray", e2 = "dual"), function(e1, e2) fastNewDual(e1 + e2@x, e2@d))
+setMethod("+", c(e1 = "numericOrArray", e2 = "dual"), 
+             function(e1, e2) {
+               x <- e1 + e2@x
+               le <- length(x)
+               if(le != length(e2@x))
+                 fastNewDual(x, rep.differential(e2@d, length = le))
+               else 
+                 fastNewDual(x, e2@d)
+})
 
 #' @rdname Arithmetic
 setMethod("+", c(e1 = "dual", e2 = "missing"), function(e1, e2) e1) # unary op +e1
@@ -45,7 +61,15 @@ setMethod("-", c(e1 = "dual", e2 = "dual"), function(e1, e2) fastNewDual(e1@x - 
 setMethod("-", c(e1 = "dual", e2 = "missing"), function(e1, e2) fastNewDual(-e1@x, neg_diff(e1@d)))
 
 #' @rdname Arithmetic
-setMethod("-", c(e1 = "dual", e2 = "numericOrArray"), function(e1, e2) fastNewDual(e1@x - e2, e1@d))
+setMethod("-", c(e1 = "dual", e2 = "numericOrArray"), 
+  function(e1, e2) { 
+    x <- e1@x - e2
+    le <- length(x)
+    if(le != length(e1@x))
+      fastNewDual(x, rep.differential(e1@d, length = le))
+    else
+      fastNewDual(x, e1@d)
+  })
 
 #' @rdname Arithmetic
 setMethod("-", c(e1 = "numericOrArray", e2 = "dual"), function(e1, e2) fastNewDual(e1 - e2@x, neg_diff(e2@d)))

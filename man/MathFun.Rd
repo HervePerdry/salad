@@ -165,6 +165,11 @@ lfactorial.dual(x)
 \description{
 various mathematical functions and methods
 }
+\details{
+The derivative of `abs` is set to be the function `sign`, so its
+derivative in 0 is considered as null. You may want to redefine `abs` using `dualFun1`
+to get an undefined derivative.
+}
 \examples{
 x <- dual(1)
 y <- log(x)

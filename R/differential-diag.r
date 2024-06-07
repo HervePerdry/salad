@@ -2,8 +2,12 @@
 diag_diff <- function(x, nrow, ncol, names = TRUE) {
   x <- unclass(x)
   L <- vector("list", length(x))
-  for(i in seq_along(x))
-    L[[i]] <- diag(x[[i]], nrow, ncol, names)
+  if(!missing(nrow) | !missing(ncol))
+    for(i in seq_along(x))
+      L[[i]] <- diag(x[[i]], nrow, ncol, names)
+  else
+    for(i in seq_along(x))
+      L[[i]] <- diag(x[[i]], names = names)
   names(L) <- names(x)
   class(L) <- "differential"
   L

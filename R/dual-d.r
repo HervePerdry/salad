@@ -6,17 +6,20 @@
 #' @param x a dual (or numeric) oject
 #' @param varnames (optional) a vector or varnames to take derivatives along
 #' 
-#' @description Get value or differential of an object.
+#' @description Get value, differential of a dual object, and the names of associated variables.
 #'
-#' @details If `varnames` is provided, a list of corresponding derivatives will be sent back
+#' @details If `varnames` is provided to the function `d`, a list of derivatives along the given variables will be sent back. 
+#' In general, it sends back the derivatives along all associated variables.
 #'
 #' @examples x <- dual(c(3,2))
+#' varnames(x^2)
 #' x**2
 #' value(x**2)
 #' d(x**2)
 #' d(x**2, "x1")
-#' # you may use a constant
+#' # you can use these methods with a numerical constant
 #' value(1)
+#' varnames(1)
 #' d(1, "x1")
 #' 
 #' @export

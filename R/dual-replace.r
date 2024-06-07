@@ -1,3 +1,21 @@
+#' @name Extract
+#' @rdname extract 
+#' @aliases [<-,dual,index,index,dual-method
+#' @title Extract or replace parts of an object
+#'
+#' @description Methods for extraction or replacements of parts of dual objects.
+#' 
+#' @param x dual object
+#' @param i,j indices of elements to extract or replace
+#' @param ... supplementary indices (for arrays)
+#' @param value replacement value
+#' @param drop for dual matrices or array.
+#'
+#' @examples x <- c(1, 2, 3)
+#' x[2] <- dual(4)
+#' x
+#' d(x)
+#
 # ---------------- replace methods -------------------------
 # dual / dual
 setMethod("[<-", c(x = "dual", i = "index", j = "index", value = "dual"),
@@ -8,6 +26,7 @@ setMethod("[<-", c(x = "dual", i = "index", j = "index", value = "dual"),
       fastNewDual(V,D)
     })
 
+#' @rdname extract 
 setMethod("[<-", c(x = "dual", i = "missing", j = "index", value = "dual"),
     function(x, i, j, ..., value) {
       V <- x@x
@@ -16,6 +35,7 @@ setMethod("[<-", c(x = "dual", i = "missing", j = "index", value = "dual"),
       fastNewDual(V,D)
     })
 
+#' @rdname extract 
 setMethod("[<-", c(x = "dual", i = "index", j = "missing", value = "dual"),
     function(x, i, j, ..., value) {
       V <- x@x
@@ -34,6 +54,7 @@ setMethod("[<-", c(x = "dual", i = "index", j = "missing", value = "dual"),
       fastNewDual(V,D)
     })
 
+#' @rdname extract 
 setMethod("[<-", c(x = "dual", i = "missing", j = "missing", value = "dual"),
     function(x, i, j, ..., value) {
       V <- x@x
@@ -43,6 +64,7 @@ setMethod("[<-", c(x = "dual", i = "missing", j = "missing", value = "dual"),
     })
 
 ####### dual / numeric
+#' @rdname extract 
 setMethod("[<-", c(x = "dual", i = "index", j = "index", value = "logicalOrNumericOrArray"), 
     function(x, i, j, ..., value) {
       value <- fastNewConstant(value, varnames.dual(x))
@@ -50,6 +72,7 @@ setMethod("[<-", c(x = "dual", i = "index", j = "index", value = "logicalOrNumer
       x
     })
 
+#' @rdname extract 
 setMethod("[<-", c(x = "dual", i = "missing", j = "index", value = "logicalOrNumericOrArray"),
     function(x, i, j, ..., value) {
       value <- fastNewConstant(value, varnames.dual(x))
@@ -57,6 +80,7 @@ setMethod("[<-", c(x = "dual", i = "missing", j = "index", value = "logicalOrNum
       x
     })
 
+#' @rdname extract 
 setMethod("[<-", c(x = "dual", i = "index", j = "missing", value = "logicalOrNumericOrArray"),
     function(x, i, j, ..., value) {
       value <- fastNewConstant(value, varnames.dual(x))
@@ -72,6 +96,7 @@ setMethod("[<-", c(x = "dual", i = "index", j = "missing", value = "logicalOrNum
       x
     })
 
+#' @rdname extract 
 setMethod("[<-", c(x = "dual", i = "missing", j = "missing", value = "logicalOrNumericOrArray"),
     function(x, i, j, ..., value) {
       value <- fastNewConstant(value, varnames.dual(x))

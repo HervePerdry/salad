@@ -3,6 +3,9 @@
 \name{inversion}
 \alias{inversion}
 \alias{det.dual}
+\alias{det}
+\alias{determinant}
+\alias{solve}
 \alias{det,dual-method}
 \alias{determinant.dual}
 \alias{solve,dual,dual-method}
@@ -35,10 +38,10 @@ det.dual(x, ...)
 \item{a, b}{dual or numerical arguments for `solve`}
 }
 \description{
-Metthods extending in a natural way the corresponding methods for numeric matrices.
+Methods extending to dual matrices the corresponding methods for numeric matrices.
 }
 \examples{
-x <- dual( matrix(c(1,2,0,3), 2, 2) )
+x <- dual( matrix(c(1,2,1,3), 2, 2) )
 det(x)
 d(det(x), "x1.1")
 solve(x)

@@ -1,4 +1,18 @@
-
+#' @name outer
+#' @rdname outer
+#' @title Outer product for dual objects
+#' @description Method extending to dual object the usual method method
+#'
+#' @param X,Y arguments of 'FUN'
+#' @param FUN function to use in the outer product
+#' @param ... extra arguments passed to `FUN`
+#'
+#' @details Methods extending `outer` and `%o%` to dual objects
+#'
+#' @examples x <- dual(1:3)
+#' outer(x, x)
+#' d(outer(x,x), "x2")
+#'
 # this is the code of base::outer with almost no change...
 #' @exportS3Method outer dual
 outer.dual <- function(X, Y, FUN = "*", ...) {
@@ -42,7 +56,20 @@ outer.dual <- function(X, Y, FUN = "*", ...) {
   robj
 }
 
+#' @rdname outer
 #' @exportMethod outer
 setMethod("outer", c(X = "dual", Y = "dual"), outer.dual)
+#' @rdname outer
 setMethod("outer", c(X = "numericOrArray", Y = "dual"), outer.dual)
+#' @rdname outer
 setMethod("outer", c(X = "dual", Y = "numericOrArray"), outer.dual)
+
+o_dual <- function (X, Y) outer(X, Y)
+#' @rdname outer
+#' @exportMethod %o%
+setMethod("%o%", c(X = "dual", Y = "dual"), o_dual)
+#' @rdname outer
+setMethod("%o%", c(X = "numericOrArray", Y = "dual"), o_dual)
+#' @rdname outer
+setMethod("%o%", c(X = "dual", Y = "numericOrArray"), o_dual)
+

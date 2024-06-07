@@ -1,5 +1,6 @@
 #' @name inversion
 #' @rdname inversion
+#' @aliases det determinant solve
 #' @title Determinant and matrix inversion for dual matrices
 #'
 #' @param x a dual matrix
@@ -7,9 +8,9 @@
 #' @param a,b dual or numerical arguments for `solve`
 #' @param ... extra parameters (ignored)
 #'
-#' @description Metthods extending in a natural way the corresponding methods for numeric matrices.
+#' @description Methods extending to dual matrices the corresponding methods for numeric matrices.
 #'
-#' @examples x <- dual( matrix(c(1,2,0,3), 2, 2) )
+#' @examples x <- dual( matrix(c(1,2,1,3), 2, 2) )
 #' det(x)
 #' d(det(x), "x1.1")
 #' solve(x)
