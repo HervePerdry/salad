@@ -1,0 +1,76 @@
+---
+title: "salad package"
+subtitle: 'Version 1.0'
+author: "Hervé Perdry"
+version: 0.1
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{milorGWAS package}
+  %\VignetteDepends{milorGWAS}
+  %\VignettePackage{milorGWAS}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r echo = FALSE}
+oldoptions <- options()
+oldpar <- par()
+options(width = 120)
+require(salad)
+```
+
+<style type="text/css">
+h1.title {
+  font-size: 200%;
+}
+
+h1 {
+  font-size: 160%;
+}
+
+h2 {
+  font-size: 130%;
+}
+
+pre {
+  padding: 0px;
+  margin: 0 0 0.5em 0;
+}
+
+div.sourceCode {
+  margin: 0px;
+}
+
+</style>
+
+# Introduction
+
+Salad is a package for Automatic Differentiation. Its name could stand for Simple And
+Light Automatic Differentiation, but it stands well by itself (eat salad, salad is good).
+
+Lots of efforts have been done to allow re-using code written without automatic differentiation 
+in mind. Consider for example the following function (which does nothing very interesting, 
+except using `ifelse`, `cbind`, and some matrix arithmetic) :
+
+```{r}
+f <- function(x) {
+  a <- x**(1:2)
+  b <- ifelse(a > 1, sin(a), 1 - a) 
+  C <- crossprod( cbind(a,b) )
+  det(C)
+}
+```
+
+The value of its derivative for a given `x` is easy to obtain with salad.
+
+```
+# value of f in x = 0.2
+f(0.2)
+# creating a dual number for x = 0.2
+x <- dual(0.2)
+y <- f(x)
+y
+# and now the derivative 
+d(f(y))
+```
+
