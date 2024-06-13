@@ -7,7 +7,7 @@ NULL
 
 .onLoad <- function(libname, pkgname) { 
   # ces méthodes ne sont pas exportées mais si je ne les enregistre pas je ne peux pas les utiliser dans le code...
-  registerS3method("dim<-", "differential", `dim.differential<-`)
-  registerS3method("names<-", "differential", `names.differential<-`)
-  registerS3method("dimnames<-", "differential", `dimnames.differential<-`)
+  registerS3method("dim<-", "differential", `dim_differential<-`)
+  registerS3method("names<-", "differential", `names_differential<-`)
+  registerS3method("dimnames<-", "differential", `dimnames_differential<-`)
 }

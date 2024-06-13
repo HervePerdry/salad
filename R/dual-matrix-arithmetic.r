@@ -72,17 +72,6 @@ setMethod("tcrossprod", signature(x="dual",y="missing"),        function(x,y) ma
 
 
 if(FALSE) { 
-# manual dispatching in a S3 method seems to have ~ same performmances...
-`%*%.dual` <- function(x, y) {
-  if(class(x) == "dual") 
-    if(class(y) == "dual") 
-      matrixprod_dd(x,y)
-    else
-      matrixprod_dn(x,y)
-  else
-    matrixprod_nd(x,y)
-}
-
 # this version of matrix product without a function call inside it
 # is still a little faster... but code maintenance will prime
 matrixprod_dd <- function(x, y) {

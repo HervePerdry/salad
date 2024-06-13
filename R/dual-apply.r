@@ -52,7 +52,7 @@ setMethod("apply", c(X = "dual"),
       ans <- vector("list", d2)
       if(length(d.call) < 2L) {
         if(length(dn.call)) 
-          dimnames.dual(newX) <- c(dn.call, list(NULL))
+          dimnames_dual(newX) <- c(dn.call, list(NULL))
         for(i in 1L:d2) {
           tmp <- forceAndCall(1, FUN, newX[, i], ...)
           if(!is.null(tmp)) ans[[i]] <- tmp

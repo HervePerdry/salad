@@ -95,9 +95,9 @@ dual <- function(x, varnames, dx, constant = FALSE) {
   if(!all(dim(x) == dim(dx)))
     stop("The value and its differential should have same dimension")
   if(is.null(dim(x))) {
-    names.differential(dx) <- names(x)
+    names_differential(dx) <- names(x)
   } else {
-    dimnames.differential(dx) <- dimnames(x)
+    dimnames_differential(dx) <- dimnames(x)
   }
   fastNewDual(x, dx)
 }

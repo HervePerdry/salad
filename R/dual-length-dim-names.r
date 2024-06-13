@@ -58,7 +58,7 @@ dim.dual <- function(x) dim(x@x)
 #' @exportS3Method 'dim<-' dual
 `dim<-.dual` <- function(x, value) {
   dim(x@x) <- value
-  dim.differential(x@d) <- value
+  dim_differential(x@d) <- value
   x
 }
 
@@ -73,14 +73,15 @@ dimnames.dual <- function(x) dimnames(x@x)
 `dimnames<-.dual` <- function(x, value) {
   if(!is.null(dim(x))) { # matrice
     dimnames(x@x) <- value
-    dimnames.differential(x@d) <- value
+    dimnames_differential(x@d) <- value
   }
   x
 }
 
 # this allow to use it directly in the code
-# see e.g in apply dimnames.dual(x) <- (etc)
-`dimnames.dual<-` <- `dimnames<-.dual` 
+# see e.g in apply dimnames_dual(x) <- (etc)
+# ! ne pas l'appeler `dimnames.dual<-` pour éviter une NOTE au check...
+`dimnames_dual<-` <- `dimnames<-.dual` 
 # --------------- names
 
 #' @rdname shape
@@ -92,7 +93,7 @@ names.dual <- function(x) names(x@x)
 `names<-.dual` <- function(x, value) {
   if(is.null(dim(x))) { # vecteur
     names(x@x) <- value
-    names.differential(x@d) <- value
+    names_differential(x@d) <- value
   }
   x
 }
