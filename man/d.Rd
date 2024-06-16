@@ -10,7 +10,7 @@
 \alias{varnames}
 \alias{varnames.dual}
 \alias{varnames.numeric}
-\title{d}
+\title{get list of derivatives}
 \usage{
 d(x, varnames)
 

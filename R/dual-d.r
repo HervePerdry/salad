@@ -1,4 +1,5 @@
-#' @title d
+#' @name d
+#' @title get list of derivatives 
 #' @aliases d.dual
 #' @aliases d.numeric
 #' 

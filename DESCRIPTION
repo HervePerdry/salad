@@ -5,8 +5,8 @@ Version: 1.0
 Date: 2024-06-07
 Author: Hervé Perdry
 Maintainer: Hervé Perdry <herve.perdry@universite-paris-saclay.fr>
-Description: Defines a flexible S4 class for automatic differentiation.
-  Handles vector and matrices. The method used is forward automatic differentiation. 
+Description: Defines an S4 class for automatic differentiation.
+  The class handles both vector and matrices. The method used is forward automatic differentiation. 
   In most cases, functions written without automatic differentiation in mind can be 
   used with no change. 
 License: MIT + file LICENSE
