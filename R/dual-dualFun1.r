@@ -9,7 +9,7 @@
 #' unable to derive. It can also gain some time for intensively used functions
 #' (see examples below).
 #'
-#' @examples # using salad do compute the differentation a quadratic function
+#' @examples # using salad do compute the differential of a quadratic function
 #' f <- function(x) x**2 + x + 1
 #' x <- dual(4)
 #' f(x)
