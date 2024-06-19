@@ -1,7 +1,3 @@
- # ---- ifelse : deux parfums ...
-# la promotion en classe "dual" ne sera faite que si nécessaire (selon les valeurs de test)
-# utiliser la classe numericOrArrayOrDual permet d'éviter d'avoir deux fois la même fonction 
-# ou bien d'avoir des ambiguités de signature
 #' @name ifelse
 #' @aliases ifelse,ANY,dual,numericOrArrayOrDual-method
 #' @aliases ifelse,ANY,numericOrArray,dual-method
@@ -14,6 +10,8 @@
 #' @param no return values for false elements of 'test'.
 #' 
 #' @description `ifelse` methods extend `base::ifelse` to allow using dual objects for 'yes' or 'no' arguments.
+#' 
+#' @return A dual object (dual vector).
 #'
 #' @examples x <- dual(c(1,2,4,6))
 #' y <- ifelse(x > 2, x, x/2)
@@ -60,4 +58,7 @@ test2logical <- function(test) { # piece of code from base::ifelse
 }
 
 
+# la promotion en classe "dual" ne sera faite que si nécessaire (selon les valeurs de test)
+# utiliser la classe numericOrArrayOrDual permet d'éviter d'avoir deux fois la même fonction 
+# ou bien d'avoir des ambiguités de signature
 

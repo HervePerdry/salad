@@ -11,6 +11,8 @@
 #'
 #' @details If `varnames` is provided to the function `d`, a list of derivatives along the given variables will be sent back. 
 #' In general, it sends back the derivatives along all associated variables.
+#' 
+#' @return A named list of derivatives.
 #'
 #' @examples x <- dual(c(3,2))
 #' varnames(x^2)

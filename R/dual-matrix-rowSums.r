@@ -9,6 +9,8 @@
 #' @param ... extra parameters (ignored)
 #'
 #' @description Method extending to dual matrices the corresponding methods for dual matrices.
+#'
+#' @details a dual object (usually a dual vector).
 #' 
 #' @examples x <- dual( c(1,2) )
 #' x <- cbind(x, 2*x+1)

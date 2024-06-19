@@ -9,6 +9,8 @@
 #' @param names if 'TRUE', pass names along
 #' @param value replacement value
 #'
+#' @param A dual object, similarly to `base::diag`
+#'
 #' @examples x <- dual( c(1,2) )
 #' diag(x)
 #' d(diag(x), "x1")

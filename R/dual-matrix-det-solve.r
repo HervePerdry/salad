@@ -10,6 +10,9 @@
 #'
 #' @description Methods extending to dual matrices the corresponding methods for numeric matrices.
 #'
+#' @return 'det' returns a dual scalar, 'determinant' a list with components 'modulus' (which is a dual object)
+#' and 'sign', and 'solve' returns a dual object (vector or matrix).
+#'
 #' @examples x <- dual( matrix(c(1,2,1,3), 2, 2) )
 #' det(x)
 #' d(det(x), "x1.1")

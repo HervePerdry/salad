@@ -9,6 +9,8 @@
 #'
 #' @details Methods extending `outer` and `%o%` to dual objects
 #'
+#' @return A dual matrix.
+#'
 #' @examples x <- dual(1:3)
 #' outer(x, x)
 #' d(outer(x,x), "x2")

@@ -18,6 +18,8 @@
 #' derivative in 0 is considered as null. You may want to redefine `abs` using `dualFun1`
 #' to get an undefined derivative.
 #'
+#' @details all functions return dual objects.
+#'
 #' @examples x <- dual(1)
 #' y <- log(x)
 #' y

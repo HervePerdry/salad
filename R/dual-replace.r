@@ -11,6 +11,8 @@
 #' @param value replacement value
 #' @param drop for dual matrices or array.
 #'
+#' @return returns a dual object (the semantic is the same as base extraction and replacement methods).
+#'
 #' @examples x <- c(1, 2, 3)
 #' x[2] <- dual(4)
 #' x

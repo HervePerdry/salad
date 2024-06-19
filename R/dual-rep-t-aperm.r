@@ -7,6 +7,8 @@
 #'
 #' @description A method extending `rep` to dual objects
 #'
+#' @return A dual object.
+#'
 #' @examples x <- rep( dual(1:2), each = 4 )
 #' x
 #' d(x)
@@ -28,6 +30,8 @@ rep.dual <- function(x, ...) {
 #' @param perm subscript permutation vector
 #' @param ... extra arguments (ignored)
 #' @param resize if 'TRUE' (default) the array is reshaped
+#'
+#' @return A dual matrix or array.
 #' 
 #' @examples x <- dual( matrix(c(1,2,0,3), 2, 2) )
 #' t(x)

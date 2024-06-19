@@ -14,6 +14,8 @@
 #' as identified by `which.max` and `which.min`. This is unfortunately problematic in presence
 #' of ties. If this is an issue, you may redefine this function (at the expense of speed).
 #'
+#' @return `which.min` and `which.max` return an integer, the other methods return a dual object.
+#'
 #' @examples x <- dual( c(1,2,4) )
 #' sum(x)
 #' d(sum(x), "x1")

@@ -23,6 +23,8 @@
 #' If you care for performance, use `stats::dnorm` directly for non dual numbers,
 #' and `dnorm.dual` for dual numbers.
 #'
+#' @return a dual object.
+#'
 #' @examples x <- dual(0)
 #' dnx <- dnorm(x)
 #' dnx

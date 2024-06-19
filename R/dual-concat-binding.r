@@ -11,6 +11,8 @@
 #' 
 #' @description Methods have been defined in order to allow the concatenation 
 #' of `dual` objects together and with constant objects.
+#'
+#' @return an object of class dual.
 #' 
 #' @examples x <- dual( 1 )
 #' # concatenation with a constant
@@ -143,6 +145,8 @@ g <- function(x, ...) {
 #' @param ... extra parameters (ignored)
 #'
 #' @description Methods allowing to use `cbind` and `rbind` with dual objects.
+#'
+#' @return A dual matrix combining the arguments.
 #'
 #' @examples x <- dual( c(1, 3) )
 #' y <- cbind(x, 2*x+1, 3*x+2, c(0,1))

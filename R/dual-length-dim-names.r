@@ -12,6 +12,8 @@
 #' @details As the methods `dimnames` and `dimnanes<-.dual` have been defined,
 #' you can use `rownames` and `colnames` as with numeric matrices (see examples).
 #'
+#' @return Return values are similar to the base methods.
+#'
 #' @examples x <- dual( matrix(c(1,0,2,3,2,4), 2, 3) )
 #' dim(x)
 #' length(x)

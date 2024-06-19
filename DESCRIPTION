@@ -3,7 +3,7 @@ Type: Package
 Title: Simple Automatic Differentiation
 Version: 1.0
 Date: 2024-06-07
-Author: Hervé Perdry
+Authors@R: person("Hervé", "Perdry", email = "herve.perdry@universite-paris-saclay.fr", role = c("aut", "cre"))
 Maintainer: Hervé Perdry <herve.perdry@universite-paris-saclay.fr>
 Description: Defines an S4 class for automatic differentiation.
   The class handles both vector and matrices. The method used is forward automatic differentiation. 

@@ -10,6 +10,8 @@
 #' of two dual objects, of a numeric and a dual object, or of a dual and a numeric object,
 #' respectively. You may use these functions to save the method dispatching time.
 #'
+#' @return A dual object.
+#'
 #' @examples x <- dual( matrix(c(0,1,3,1), 2, 2) )
 #' y <- x %*% c(2,-2)
 #' d(y, "x1.1")
