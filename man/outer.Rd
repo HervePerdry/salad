@@ -32,6 +32,9 @@ outer.dual(X, Y, FUN = "*", ...)
 
 \item{...}{extra arguments passed to `FUN`}
 }
+\value{
+A dual matrix.
+}
 \description{
 Method extending to dual object the usual method method
 }

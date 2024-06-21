@@ -40,6 +40,9 @@ colMeans.dual(x, na.rm = FALSE, dims = 1, ...)
 
 \item{...}{extra parameters (ignored)}
 }
+\value{
+a dual object (usually a dual vector).
+}
 \description{
 Method extending to dual matrices the corresponding methods for dual matrices.
 }

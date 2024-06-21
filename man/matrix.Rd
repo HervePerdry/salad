@@ -40,6 +40,9 @@
 
 \item{mode}{The mode of the vector to create}
 }
+\value{
+A dual object for `matrix` and `array`, a base object for `as.matrix` and `as.vector`.
+}
 \description{
 Methods for `matrix`, `array`, `as.matrix` and `as.vector`
 }

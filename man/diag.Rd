@@ -25,6 +25,9 @@ diag.dual(x, nrow, ncol, names = TRUE)
 
 \item{value}{replacement value}
 }
+\value{
+A dual object, similarly to `base::diag`
+}
 \description{
 Methods extending to dual objects the corresponding methods for numeric objects.
 }

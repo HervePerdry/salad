@@ -11,6 +11,9 @@ dualFun1(f, df)
 
 \item{df}{the differential of f}
 }
+\value{
+Returns a function.
+}
 \description{
 Defining the differential of a univariate function
 }

@@ -14,6 +14,9 @@
 
 \item{...}{other objects}
 }
+\value{
+an object of class dual.
+}
 \description{
 Methods have been defined in order to allow the concatenation 
 of `dual` objects together and with constant objects.

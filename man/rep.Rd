@@ -12,6 +12,9 @@
 
 \item{...}{extra parameters (typically, 'times', 'length.out' or 'each')}
 }
+\value{
+A dual object.
+}
 \description{
 A method extending `rep` to dual objects
 }

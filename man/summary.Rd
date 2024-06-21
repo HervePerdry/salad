@@ -54,6 +54,9 @@
 
 \item{na.rm}{if 'TRUE', NA values are removed}
 }
+\value{
+`which.min` and `which.max` return an integer, the other methods return a dual object.
+}
 \description{
 Methods extending to dual objects the corresponding methods for numeric objects.
 }

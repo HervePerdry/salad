@@ -51,6 +51,9 @@
 
 \item{drop}{for dual matrices or array.}
 }
+\value{
+returns a dual object (the semantic is the same as base extraction and replacement methods).
+}
 \description{
 Methods for extraction or replacements of parts of dual objects.
 }

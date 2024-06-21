@@ -16,7 +16,7 @@
 #' This can be modified using `salad` (to use with care). The prefered method to change the
 #' shape is to use `dim<-`.
 #'
-#' @details A dual object for `matrix` and `array`, a base object for `as.matrix` and `as.vector`.
+#' @return A dual object for `matrix` and `array`, a base object for `as.matrix` and `as.vector`.
 #'
 #' @seealso \link{shape}, \code{\link{salad}}, \link{dual-class}
 #'

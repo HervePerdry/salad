@@ -20,6 +20,9 @@
 
 \item{...}{extra arguments (ignored)}
 }
+\value{
+A dual matrix or array.
+}
 \description{
 Transposition of matrices and arrays
 }

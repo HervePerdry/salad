@@ -10,7 +10,7 @@
 #'
 #' @return The returned value depends on the values returned by `FUN`, similarly to `base::apply`
 #'
-#' @seealso \code{\link{base::apply}}
+#' @seealso \code{\link{apply}}
 #' 
 #' @examples A <- matrix( c(1,2,3,4), 2, 2)
 #' x <- dual(A)

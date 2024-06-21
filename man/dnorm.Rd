@@ -18,6 +18,9 @@ dnorm.dual(x, mean = 0, sd = 1, log = FALSE)
 
 \item{log}{logical. If TRUE, log of densities are returned}
 }
+\value{
+a dual object.
+}
 \description{
 Density for the normal distribution, accepting
 objects of class 'dual'

@@ -15,6 +15,9 @@ ifelse(test, yes, no)
 
 \item{no}{return values for false elements of 'test'.}
 }
+\value{
+A dual object (dual vector).
+}
 \description{
 `ifelse` methods extend `base::ifelse` to allow using dual objects for 'yes' or 'no' arguments.
 }

@@ -31,6 +31,9 @@ varnames(x)
 
 \item{varnames}{(optional) a vector or varnames to take derivatives along}
 }
+\value{
+A named list of derivatives.
+}
 \description{
 Get value, differential of a dual object, and the names of associated variables.
 }

@@ -37,6 +37,10 @@ det.dual(x, ...)
 
 \item{a, b}{dual or numerical arguments for `solve`}
 }
+\value{
+'det' returns a dual scalar, 'determinant' a list with components 'modulus' (which is a dual object)
+and 'sign', and 'solve' returns a dual object (vector or matrix).
+}
 \description{
 Methods extending to dual matrices the corresponding methods for numeric matrices.
 }

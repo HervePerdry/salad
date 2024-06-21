@@ -30,6 +30,9 @@
 
 \item{value}{for replacement methods, the new value}
 }
+\value{
+Return values are similar to the base methods.
+}
 \description{
 S3 methods for length, dim, names and dimnames
 }

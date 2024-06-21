@@ -34,6 +34,9 @@
 
 \item{...}{extra parameters (ignored)}
 }
+\value{
+A dual matrix combining the arguments.
+}
 \description{
 Methods allowing to use `cbind` and `rbind` with dual objects.
 }

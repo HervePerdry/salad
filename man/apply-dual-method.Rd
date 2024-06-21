@@ -17,6 +17,9 @@
 
 \item{simplify}{a logical indicating whether the results should be simplified}
 }
+\value{
+The returned value depends on the values returned by `FUN`, similarly to `base::apply`
+}
 \description{
 This method generalizes `base::apply` to dual objects.
 }

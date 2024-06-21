@@ -49,6 +49,9 @@ matrixprod_dd(x, y)
 \arguments{
 \item{x, y}{Dual or numeric matrices or vectors}
 }
+\value{
+A dual object.
+}
 \description{
 Methods and functions for dual matrix arithmetic
 }

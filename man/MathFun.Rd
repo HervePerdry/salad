@@ -59,9 +59,9 @@ logNeper(x)
 
 \method{log}{dual}(x, base = exp(1))
 
-\method{log10}{dual}(x)
+log10.dual(x)
 
-\method{log2}{dual}(x)
+log2.dual(x)
 
 \method{log1p}{dual}(x)
 
@@ -161,6 +161,9 @@ lfactorial.dual(x)
 \item{n}{first argument of choose and lchoose (dual)}
 
 \item{k}{second argument of choose and lchoose (numeric)}
+}
+\value{
+All functions return dual objects.
 }
 \description{
 various mathematical functions and methods
