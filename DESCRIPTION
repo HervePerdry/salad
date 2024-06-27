@@ -1,7 +1,7 @@
 Package: salad
 Type: Package
 Title: Simple Automatic Differentiation
-Version: 1.0
+Version: 1.0 
 Date: 2024-06-07
 Authors@R: person("Hervé", "Perdry", email = "herve.perdry@universite-paris-saclay.fr", role = c("aut", "cre"))
 Maintainer: Hervé Perdry <herve.perdry@universite-paris-saclay.fr>
