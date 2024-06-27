@@ -12,7 +12,7 @@
 
 <meta name="author" content="Hervé Perdry" />
 
-<meta name="date" content="2024-06-16" />
+<meta name="date" content="2024-06-27" />
 
 <title>salad package</title>
 
@@ -327,7 +327,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">salad package</h1>
 <h3 class="subtitle">Version 1.0</h3>
 <h4 class="author">Hervé Perdry</h4>
-<h4 class="date">2024-06-16</h4>
+<h4 class="date">2024-06-27</h4>
 
 
 
@@ -642,10 +642,10 @@ div.sourceCode {
 <p>This allows you to use special functions that salad can’t handle; moreover, even for simple functions like this one, it saves some time:</p>
 <div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" title="1"><span class="kw">system.time</span>( <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">500</span>) <span class="kw">f</span>(x) )</a></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.021   0.000   0.021</code></pre>
+##   0.016   0.000   0.016</code></pre>
 <div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" title="1"><span class="kw">system.time</span>( <span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">500</span>) <span class="kw">f1</span>(x) )</a></code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.007   0.000   0.006</code></pre>
+##   0.006   0.000   0.006</code></pre>
 <p>It can thus be useful to define the derivatives of the some of the functions you are using in this way.</p>
 </div>
 <div id="contributing-to-salad" class="section level1">

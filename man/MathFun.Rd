@@ -59,9 +59,9 @@ logNeper(x)
 
 \method{log}{dual}(x, base = exp(1))
 
-log10.dual(x)
+\method{log10}{dual}(x)
 
-log2.dual(x)
+\method{log2}{dual}(x)
 
 \method{log1p}{dual}(x)
 
