@@ -2,7 +2,7 @@ Package: salad
 Type: Package
 Title: Simple Automatic Differentiation
 Version: 1.1
-Date: 2024-06-07
+Date: 2024-11-02
 Authors@R: person("Hervé", "Perdry", email = "herve.perdry@universite-paris-saclay.fr", role = c("aut", "cre"))
 Maintainer: Hervé Perdry <herve.perdry@universite-paris-saclay.fr>
 Description: Defines an S4 class for automatic differentiation.
