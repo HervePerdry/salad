@@ -15,9 +15,5 @@ Depends: methods
 Imports: stats
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
-RoxygenNote: 7.3.2
 NeedsCompilation: no
-Packaged: 2024-12-18 12:21:06 UTC; rv
-Author: Hervé Perdry [aut, cre]
-Repository: CRAN
-Date/Publication: 2024-12-18 12:30:02 UTC
+RoxygenNote: 7.3.2
