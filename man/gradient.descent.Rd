@@ -27,7 +27,7 @@ gradient.descent(
 
 \item{reltol}{Relative convergence tolerance}
 
-\item{trace}{If 'TRUE', keep trace of the visited pointed}
+\item{trace}{If 'TRUE', keep trace of the visited points}
 }
 \value{
 a list with components: 'par' is the final value of the parameter,

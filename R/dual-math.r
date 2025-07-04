@@ -46,7 +46,7 @@ logNeper <- dualFun1(log, \(x) 1/x)
 log.dual   <- function(x, base = exp(1)) if(missing(base)) logNeper(x) else logNeper(x)/log(base)
 
 #' @rdname MathFun
-#' @exportS3Method log10 dual
+#' @exportS3Method log10 dual 
 log10.dual <- dualFun1(log10, \(x) 0.43429448190325176/x)
 
 #' @rdname MathFun
@@ -59,7 +59,7 @@ log1p.dual <- dualFun1(log1p, \(x) 1/(1+x))
 
 #' @rdname MathFun
 #' @exportS3Method sqrt dual
-sqrt.dual <- function(x) { sqrtx <- sqrt(x); fastNewDual(sqrtx, product_diff(0.5/sqrtx, x@d)) }
+sqrt.dual <- function(x) { sqrtx <- sqrt(x@x); fastNewDual(sqrtx, product_diff(0.5/sqrtx, x@d)) }
 
 # ------------------ trigo
 #' @rdname MathFun

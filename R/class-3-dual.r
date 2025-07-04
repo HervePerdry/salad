@@ -62,3 +62,4 @@ setMethod("show", "dual",
       cat(s)
     })
 
+

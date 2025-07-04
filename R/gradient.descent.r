@@ -8,7 +8,7 @@
 #' @param step   Step size. Use a negative value to perform a gradient ascent.
 #' @param maxit  Maximum number of iterations
 #' @param reltol Relative convergence tolerance
-#' @param trace  If 'TRUE', keep trace of the visited pointed
+#' @param trace  If 'TRUE', keep trace of the visited points
 #'
 #' @details First note that this is not an efficient optimisation method. It
 #' is included in the package as a demonstration only.
